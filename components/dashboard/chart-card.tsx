@@ -18,8 +18,8 @@ import {
   LineChart,
   ResponsiveContainer,
   Tooltip,
-  XAxis,
-  YAxis,
+/*  XAxis,
+  YAxis,*/
 } from "recharts";
 
 interface ChartCardProps {
@@ -60,7 +60,7 @@ export function ChartCard({
           {chart === "bar" ? (
             <BarChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-              <XAxis
+             {/* <XAxis
                 dataKey={index}
                 tick={{ fontSize: 12 }}
                 tickLine={false}
@@ -72,7 +72,7 @@ export function ChartCard({
                 tickLine={false}
                 axisLine={false}
                 className="text-xs text-muted-foreground"
-              />
+              />*/}
               <Tooltip
                 contentStyle={{
                   backgroundColor: "hsl(var(--card))",
@@ -93,7 +93,7 @@ export function ChartCard({
           ) : chart === "line" ? (
             <LineChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-              <XAxis
+              {/*<XAxis
                 dataKey={index}
                 tick={{ fontSize: 12 }}
                 tickLine={false}
@@ -105,7 +105,7 @@ export function ChartCard({
                 tickLine={false}
                 axisLine={false}
                 className="text-xs text-muted-foreground"
-              />
+              />*/}
               <Tooltip
                 contentStyle={{
                   backgroundColor: "hsl(var(--card))",
@@ -128,7 +128,7 @@ export function ChartCard({
           ) : (
             <AreaChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-              <XAxis
+              {/* <XAxis
                 dataKey={index}
                 tick={{ fontSize: 12 }}
                 tickLine={false}
@@ -140,7 +140,7 @@ export function ChartCard({
                 tickLine={false}
                 axisLine={false}
                 className="text-xs text-muted-foreground"
-              />
+              />*/}
               <Tooltip
                 contentStyle={{
                   backgroundColor: "hsl(var(--card))",
