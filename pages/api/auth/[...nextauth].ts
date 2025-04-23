@@ -1,3 +1,4 @@
+// @ts-expect-error error expected
 import NextAuth, {NextAuthOptions} from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -8,7 +9,7 @@ export const authOptions: NextAuthOptions = {
                 email: {},
                 password: {},
             },
-            // @ts-ignore
+            // @ts-expect-error expected
             async authorize(credentials) {
                 // const res = await fetch("https://tu-api.com/login", {
                 //     method: "POST",
@@ -24,7 +25,8 @@ export const authOptions: NextAuthOptions = {
                 const user = {
                     ok: true,
                     token: 'faketoken',
-                    name: 'Agu'
+                    name: 'Agu',
+                    modules: ['recruitment:reception', 'home']
                 }
 
                 console.log('res', credentials);

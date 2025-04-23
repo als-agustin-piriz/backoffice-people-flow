@@ -1,12 +1,14 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="px-6 lg:px-8 h-16 flex items-center backdrop-blur-sm bg-background/30 border-b border-border">
+      <header
+        className="px-6 lg:px-8 h-16 flex items-center backdrop-blur-sm bg-background/30 border-b border-border">
         <Link href="/" className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-md bg-primary flex items-center justify-center text-primary-foreground font-bold">
+          <div
+            className="h-8 w-8 rounded-md bg-primary flex items-center justify-center text-primary-foreground font-bold">
             D
           </div>
           <span className="font-semibold">DashBoard</span>
@@ -43,14 +45,17 @@ export default function Home() {
             <div className="w-full h-full bg-gradient-to-tr from-muted to-card p-8 flex flex-col">
               <div className="grid grid-cols-4 gap-4 mb-4">
                 {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="h-24 rounded-lg bg-background/50 border border-border animate-pulse" />
+                  <div key={i}
+                       className="h-24 rounded-lg bg-background/50 border border-border animate-pulse" />
                 ))}
               </div>
               <div className="flex-1 rounded-lg bg-background/50 border border-border animate-pulse" />
             </div>
           </div>
-          <div className="absolute -bottom-4 -right-4 h-24 w-24 rounded-lg bg-primary blur-3xl opacity-20 animate-pulse" />
-          <div className="absolute -top-4 -left-4 h-24 w-24 rounded-lg bg-primary blur-3xl opacity-20 animate-pulse" />
+          <div
+            className="absolute -bottom-4 -right-4 h-24 w-24 rounded-lg bg-primary blur-3xl opacity-20 animate-pulse" />
+          <div
+            className="absolute -top-4 -left-4 h-24 w-24 rounded-lg bg-primary blur-3xl opacity-20 animate-pulse" />
         </div>
       </main>
       <footer className="border-t border-border py-6 px-6 lg:px-8">

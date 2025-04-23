@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Sidebar } from "./sidebar";
-import { Header } from "./header";
+import { useState } from 'react';
+import { Sidebar } from './sidebar';
+import { Header } from './header';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -10,7 +10,7 @@ interface DashboardLayoutProps {
 }
 
 export function DashboardLayout({ children, title }: DashboardLayoutProps) {
-  const [sidebarExpanded, setSidebarExpanded] = useState(true);
+  const [sidebarExpanded] = useState(true);
 
   return (
     <div className="flex h-screen overflow-hidden">

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Card,
@@ -6,7 +6,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from '@/components/ui/card';
 import {
   Area,
   AreaChart,
@@ -18,35 +18,34 @@ import {
   LineChart,
   ResponsiveContainer,
   Tooltip,
-/*  XAxis,
-  YAxis,*/
-} from "recharts";
+  /*  XAxis,
+    YAxis,*/
+} from 'recharts';
 
 interface ChartCardProps {
   title: string;
   description?: string;
-  chart: "line" | "bar" | "area";
-  data: any[];
+  chart: 'line' | 'bar' | 'area';
+  data: never[];
   categories: string[];
   index: string;
   className?: string;
 }
 
 export function ChartCard({
-  title,
-  description,
-  chart,
-  data,
-  categories,
-  index,
-  className,
-}: ChartCardProps) {
+                            title,
+                            description,
+                            chart,
+                            data,
+                            categories,
+                            className,
+                          }: ChartCardProps) {
   const colors = [
-    "hsl(var(--chart-1))",
-    "hsl(var(--chart-2))",
-    "hsl(var(--chart-3))",
-    "hsl(var(--chart-4))",
-    "hsl(var(--chart-5))",
+    'hsl(var(--chart-1))',
+    'hsl(var(--chart-2))',
+    'hsl(var(--chart-3))',
+    'hsl(var(--chart-4))',
+    'hsl(var(--chart-5))',
   ];
 
   return (
@@ -57,10 +56,10 @@ export function ChartCard({
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={300}>
-          {chart === "bar" ? (
+          {chart === 'bar' ? (
             <BarChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-             {/* <XAxis
+              {/* <XAxis
                 dataKey={index}
                 tick={{ fontSize: 12 }}
                 tickLine={false}
@@ -75,10 +74,10 @@ export function ChartCard({
               />*/}
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "hsl(var(--card))",
-                  borderColor: "hsl(var(--border))",
+                  backgroundColor: 'hsl(var(--card))',
+                  borderColor: 'hsl(var(--border))',
                 }}
-                cursor={{ fill: "hsl(var(--accent))" }}
+                cursor={{ fill: 'hsl(var(--accent))' }}
               />
               <Legend wrapperStyle={{ fontSize: 12 }} />
               {categories.map((category, i) => (
@@ -90,7 +89,7 @@ export function ChartCard({
                 />
               ))}
             </BarChart>
-          ) : chart === "line" ? (
+          ) : chart === 'line' ? (
             <LineChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
               {/*<XAxis
@@ -108,8 +107,8 @@ export function ChartCard({
               />*/}
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "hsl(var(--card))",
-                  borderColor: "hsl(var(--border))",
+                  backgroundColor: 'hsl(var(--card))',
+                  borderColor: 'hsl(var(--border))',
                 }}
               />
               <Legend wrapperStyle={{ fontSize: 12 }} />
@@ -143,8 +142,8 @@ export function ChartCard({
               />*/}
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "hsl(var(--card))",
-                  borderColor: "hsl(var(--border))",
+                  backgroundColor: 'hsl(var(--card))',
+                  borderColor: 'hsl(var(--border))',
                 }}
               />
               <Legend wrapperStyle={{ fontSize: 12 }} />
