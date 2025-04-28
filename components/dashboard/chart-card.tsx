@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Area,
   AreaChart,
@@ -18,15 +12,13 @@ import {
   LineChart,
   ResponsiveContainer,
   Tooltip,
-  /*  XAxis,
-    YAxis,*/
 } from 'recharts';
 
 interface ChartCardProps {
   title: string;
   description?: string;
   chart: 'line' | 'bar' | 'area';
-  data: never[];
+  data: any;
   categories: string[];
   index: string;
   className?: string;

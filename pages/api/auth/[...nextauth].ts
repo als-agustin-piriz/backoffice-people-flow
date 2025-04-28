@@ -1,6 +1,6 @@
 // @ts-expect-error error expected
-import NextAuth, {NextAuthOptions} from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import NextAuth, { NextAuthOptions } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -26,7 +26,7 @@ export const authOptions: NextAuthOptions = {
                     ok: true,
                     token: 'faketoken',
                     name: 'Agu',
-                    modules: ['recruitment:reception', 'home']
+                  modules: ['dashboard:view', 'companies:view'],
                 }
 
                 console.log('res', credentials);

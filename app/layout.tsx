@@ -1,11 +1,10 @@
-// app/layout.tsx (o cualquier layout server component)
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from '@/providers/theme-provider';
-import { getServerSession } from 'next-auth';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import ClientSessionProvider from '@/components/providers/ClientSessionProvider';
+import { getServerSession } from 'next-auth';
 
 const inter = Inter({ subsets: ['latin'] });
 

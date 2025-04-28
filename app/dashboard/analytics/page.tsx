@@ -36,7 +36,7 @@ const deviceData = [
 ];
 
 export default function AnalyticsPage() {
-  return withAuthServer(['recruitment:reception1'], async () => {
+  return withAuthServer(['recruitment:reception'], async () => {
     return (
       <div className="space-y-6">
         <div className="grid gap-6 grid-cols-1">

@@ -21,28 +21,6 @@ interface HeaderProps {
 }
 
 export function Header({ title, sidebarExpanded }: HeaderProps) {
-
-  // const handleLogout = async (e: React.FormEvent) => {
-  //     e.preventDefault()
-  //
-  //     try {
-  //         const res = await fetch('/api/login', {
-  //             method: 'POST',
-  //             body: JSON.stringify({email, password}),
-  //             headers: {'Content-Type': 'application/json'},
-  //         })
-  //
-  //         if (!res.ok) throw new Error('Credenciales inválidas')
-  //
-  //         router.push('/dashboard')
-  //     } catch (err: any) {
-  //         setError(err.message)
-  //     } finally {
-  //         setLoading(false)
-  //     }
-  // }
-
-
   return (
     <header
       className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b border-border bg-background/95 px-6 backdrop-blur">
@@ -113,11 +91,6 @@ export function Header({ title, sidebarExpanded }: HeaderProps) {
               <button onClick={() => signOut({ callbackUrl: '/login' })}>
                 Cerrar sesión
               </button>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <div>
-                <a href="/login">Ir al login</a>
-              </div>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

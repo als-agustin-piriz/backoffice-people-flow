@@ -3,38 +3,36 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import {
-  ChevronLeft,
-  ChevronRight,
-} from 'lucide-react';
+import { BarChart2, ChevronLeft, ChevronRight, Home, Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { useSession } from 'next-auth/react';
 import { filterNavigationByAccess } from '@/lib/permissions';
 import { navigationItems } from '@/lib/navigation';
 
-// interface SidebarItem {
-//   title: string;
-//   href: string;
-//   icon: React.ReactNode;
-// }
+interface SidebarItem {
+  title: string;
+  href: string;
+  icon: React.ReactNode;
+}
 
-// const sidebarItems: SidebarItem[] = [
-//   { title: 'Dashboard', href: '/dashboard', icon: <Home size={20} /> },
-//   { title: 'Analytics', href: '/dashboard/analytics', icon: <BarChart2 size={20} /> },
-//   { title: 'Customers', href: '/dashboard/customers', icon: <Users size={20} /> },
-//   { title: 'Products', href: '/dashboard/products', icon: <ShoppingCart size={20} /> },
-//   { title: 'Projects', href: '/dashboard/projects', icon: <FolderClosed size={20} /> },
-//   { title: 'Calendar', href: '/dashboard/calendar', icon: <Calendar size={20} /> },
-//   { title: 'Messages', href: '/dashboard/messages', icon: <MessageSquare size={20} /> },
-//   { title: 'Settings', href: '/dashboard/settings', icon: <Settings size={20} /> },
-// ];
+const sidebarItems: SidebarItem[] = [
+  { title: 'Dashboard', href: '/dashboard', icon: <Home size={20} /> },
+  { title: 'Analytics', href: '/dashboard/analytics', icon: <BarChart2 size={20} /> },
+  { title: 'Customers', href: '/dashboard/customers', icon: <Users size={20} /> },
+  // { title: 'Products', href: '/dashboard/products', icon: <ShoppingCart size={20} /> },
+  // { title: 'Projects', href: '/dashboard/projects', icon: <FolderClosed size={20} /> },
+  // { title: 'Calendar', href: '/dashboard/calendar', icon: <Calendar size={20} /> },
+  // { title: 'Messages', href: '/dashboard/messages', icon: <MessageSquare size={20} /> },
+  // { title: 'Settings', href: '/dashboard/settings', icon: <Settings size={20} /> },
+];
 
 export function Sidebar() {
   const pathname = usePathname();
   const [expanded, setExpanded] = useState(true);
   const { data: session, status } = useSession();
   const userLogged = status === 'authenticated';
+  // @ts-expect-error error expected
   const items = filterNavigationByAccess(session, navigationItems);
 
   return (
@@ -66,7 +64,7 @@ export function Sidebar() {
       </div>
       <div className="flex-1 overflow-y-auto py-4">
         <nav className="space-y-1 px-2">
-          {items.map((item) => {
+          {sidebarItems.map((item) => {
             const isActive = pathname === item.href;
 
             if (expanded) {
@@ -81,7 +79,7 @@ export function Sidebar() {
                       : 'hover:bg-muted',
                   )}
                 >
-                  {item.icon}
+                  {/*{item.icon}*/}
                   <span>{item.title}</span>
                   {item.title === 'Messages' && (
                     <span
@@ -104,7 +102,7 @@ export function Sidebar() {
                       : 'hover:bg-muted',
                   )}
                 >
-                  {item.icon}
+                  {/*{item.icon}*/}
                   {item.title === 'Messages' && (
                     <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-primary" />
                   )}

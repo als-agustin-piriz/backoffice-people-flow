@@ -1,5 +1,5 @@
-import {Session} from "next-auth";
-import {navigationItems} from "@/lib/navigation";
+import { Session } from 'next-auth';
+import { navigationItems } from '@/lib/navigation';
 
 export function hasAnyAccess(
     session: Session | null,
