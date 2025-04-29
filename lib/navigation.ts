@@ -13,71 +13,70 @@ export type Permission =
   | 'settings:edit';
 
 
-// export const navigationItems: SidebarItem[] = [
-//   {
-//     label: 'Dashboard',
-//     path: '/dashboard',
-//     // icon: <DashboardIcon / >,
-//     requiredPermissions: ['dashboard:view'],
-//   },
-//   {
-//     label: 'Compañias',
-//     path: '/dashboard/companies',
-//     // icon: <SettingsIcon / >,
-//     requiredPermissions: ['companies:view'],
-//   },
-//   {
-//     label: 'Módulos',
-//     path: '/dashboard/modules',
-//     // icon: <SettingsIcon / >,
-//     requiredPermissions: ['modules:view'],
-//   },
-//   {
-//     label: 'Usuarios',
-//     path: '/dashboard/users',
-//     // icon: <SettingsIcon / >,
-//     requiredPermissions: ['users:view'],
-//   },
-//   {
-//     label: 'Configuraciones',
-//     path: '/dashboard/configurations',
-//     // icon: <SettingsIcon / >,
-//     requiredPermissions: ['configurations:view'],
-//   },
-// {
-//   label: 'Compañias',
-//   // icon: <UsersIcon / >,
-//   requiredPermissions: ['users:manage', 'reports:view'], // Permiso para ver el menú principal
-//   children: [
-//     {
-//       label: 'Alta compañia',
-//       path: '/users',
-//       requiredPermissions: ['companies:manage'],
-//     },
-//     {
-//       label: 'Reportes',
-//       path: '/reports',
-//       requiredPermissions: ['companies:view'],
-//     },
-//   ],
-// },
-
-// ];
-
-export const navigationItems = [
+export const navigationItems: SidebarItem[] = [
   {
-    title: 'Inicio',
-    href: '/dashboard',
-    requiredModules: ['home'],
+    label: 'Dashboard',
+    path: '/dashboard',
+    // icon: <DashboardIcon / >,
+    requiredPermissions: ['dashboard:view'],
   },
   {
-    title: 'Compañias',
-    href: '/dashboard/companies',
-    requiredModules: ['recruitment:companies:write'],
+    label: 'Compañias',
+    path: '/dashboard/companies',
+    // icon: <SettingsIcon / >,
+    requiredPermissions: ['companies:view'],
   },
   {
-    title: 'Customers',
-    href: '/dashboard/customers',
-    requiredModules: ['admin'],
+    label: 'Módulos',
+    path: '/dashboard/modules',
+    // icon: <SettingsIcon / >,
+    requiredPermissions: ['modules:view'],
+  },
+  {
+    label: 'Usuarios',
+    path: '/dashboard/users',
+    // icon: <SettingsIcon / >,
+    requiredPermissions: ['users:view'],
+  },
+  {
+    label: 'Configuraciones',
+    path: '/dashboard/configurations',
+    // icon: <SettingsIcon / >,
+    requiredPermissions: ['configurations:view'],
+  },
+  {
+    label: 'Compañias',
+    // icon: <UsersIcon / >,
+    requiredPermissions: ['users:manage', 'reports:view'], // Permiso para ver el menú principal
+    children: [
+      {
+        label: 'Alta compañia',
+        path: '/users',
+        requiredPermissions: ['companies:manage'],
+      },
+      {
+        label: 'Reportes',
+        path: '/reports',
+        requiredPermissions: ['companies:view'],
+      },
+    ],
   },
 ];
+
+// export const navigationItems = [
+//   {
+//     title: 'Inicio',
+//     href: '/dashboard',
+//     requiredModules: ['home'],
+//   },
+//   {
+//     title: 'Compañias',
+//     href: '/dashboard/companies',
+//     requiredModules: ['recruitment:companies:write'],
+//   },
+//   {
+//     title: 'Customers',
+//     href: '/dashboard/customers',
+//     requiredModules: ['admin'],
+//   },
+// ];

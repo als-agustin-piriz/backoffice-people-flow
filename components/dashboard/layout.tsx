@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import { Header } from './header';
-import { useSession } from 'next-auth/react';
-import { Sidebar } from './sidebar'
+import { Sidebar } from './sidebar';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -12,7 +11,6 @@ interface DashboardLayoutProps {
 
 export function DashboardLayout({ children, title }: DashboardLayoutProps) {
   const [sidebarExpanded] = useState(true);
-  const { data: session } = useSession();
 
   return (
     <div className="flex h-screen overflow-hidden">

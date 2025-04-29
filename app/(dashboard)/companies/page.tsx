@@ -35,8 +35,8 @@ const deviceData = [
   { device: 'Tablet', users: 1800, percentage: 15 },
 ];
 
-export default function AnalyticsPage() {
-  return withAuthServer(['recruitment:reception'], async () => {
+export default function CompaniesPage() {
+  return withAuthServer(['companies:read'], async () => {
     return (
       <div className="space-y-6">
         <div className="grid gap-6 grid-cols-1">

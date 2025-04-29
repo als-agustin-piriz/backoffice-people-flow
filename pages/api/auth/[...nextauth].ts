@@ -26,7 +26,7 @@ export const authOptions: NextAuthOptions = {
                     ok: true,
                     token: 'faketoken',
                     name: 'Agu',
-                  modules: ['dashboard:view', 'companies:view'],
+                  modules: ['companies:read', 'modules:read', 'users:read', 'configurations:read'],
                 }
 
                 console.log('res', credentials);
@@ -62,4 +62,5 @@ export const authOptions: NextAuthOptions = {
     },
 };
 
+// @ts-ignore
 export default NextAuth(authOptions);

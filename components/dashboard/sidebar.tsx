@@ -7,8 +7,6 @@ import { BarChart2, ChevronLeft, ChevronRight, Home, Users } from 'lucide-react'
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { useSession } from 'next-auth/react';
-import { filterNavigationByAccess } from '@/lib/permissions';
-import { navigationItems } from '@/lib/navigation';
 
 interface SidebarItem {
   title: string;
@@ -17,14 +15,10 @@ interface SidebarItem {
 }
 
 const sidebarItems: SidebarItem[] = [
-  { title: 'Dashboard', href: '/dashboard', icon: <Home size={20} /> },
-  { title: 'Analytics', href: '/dashboard/analytics', icon: <BarChart2 size={20} /> },
-  { title: 'Customers', href: '/dashboard/customers', icon: <Users size={20} /> },
-  // { title: 'Products', href: '/dashboard/products', icon: <ShoppingCart size={20} /> },
-  // { title: 'Projects', href: '/dashboard/projects', icon: <FolderClosed size={20} /> },
-  // { title: 'Calendar', href: '/dashboard/calendar', icon: <Calendar size={20} /> },
-  // { title: 'Messages', href: '/dashboard/messages', icon: <MessageSquare size={20} /> },
-  // { title: 'Settings', href: '/dashboard/settings', icon: <Settings size={20} /> },
+  { title: 'Compañias', href: '/companies', icon: <Home size={20} /> },
+  { title: 'Módulos', href: '/modules', icon: <BarChart2 size={20} /> },
+  { title: 'Usuarios', href: '/users', icon: <Users size={20} /> },
+  { title: 'Configuraciones', href: '/configurations', icon: <Users size={20} /> },
 ];
 
 export function Sidebar() {
@@ -32,8 +26,6 @@ export function Sidebar() {
   const [expanded, setExpanded] = useState(true);
   const { data: session, status } = useSession();
   const userLogged = status === 'authenticated';
-  // @ts-expect-error error expected
-  const items = filterNavigationByAccess(session, navigationItems);
 
   return (
     <div className={cn(
@@ -102,7 +94,7 @@ export function Sidebar() {
                       : 'hover:bg-muted',
                   )}
                 >
-                  {/*{item.icon}*/}
+                  {item.icon}
                   {item.title === 'Messages' && (
                     <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-primary" />
                   )}
