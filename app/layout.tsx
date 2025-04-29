@@ -6,6 +6,7 @@ import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import ClientSessionProvider from '@/components/providers/ClientSessionProvider';
 import { getServerSession } from 'next-auth/next';
 import type { Session } from 'next-auth';
+import { ProviderHeroUi } from '@/providers/heroui-provider';
 
 
 const inter = Inter({ subsets: ['latin'] });
@@ -26,9 +27,11 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
     <body className={inter.className}>
     <ClientSessionProvider session={session}>
+      <ProviderHeroUi>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         {children}
       </ThemeProvider>
+      </ProviderHeroUi>
     </ClientSessionProvider>
     </body>
     </html>

@@ -4,6 +4,11 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   images: { unoptimized: true },
+  transpilePackages: [
+    '@react-aria/visually-hidden',
+    '@react-aria/utils',
+    '@headlessui/react',
+  ],
 };
 
 module.exports = nextConfig;

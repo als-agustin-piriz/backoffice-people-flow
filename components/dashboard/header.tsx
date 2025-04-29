@@ -14,18 +14,21 @@ import {
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { signOut } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
+import { routes } from '@/lib/routes';
 
 interface HeaderProps {
-  title: string;
   sidebarExpanded: boolean;
 }
 
-export function Header({ title, sidebarExpanded }: HeaderProps) {
+export function Header({ sidebarExpanded }: HeaderProps) {
+  const pathname = usePathname();
+  const route = routes.find(r => r.path === pathname);
   return (
     <header
       className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b border-border bg-background/95 px-6 backdrop-blur">
       <div className={cn('flex-1 transition-all', sidebarExpanded ? 'pl-0' : 'pl-0')}>
-        <h1 className="text-xl font-semibold tracking-tight">{title}</h1>
+        <h1 className="text-xl font-semibold tracking-tight">{route?.name}</h1>
       </div>
       <div className="relative hidden md:flex">
         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
