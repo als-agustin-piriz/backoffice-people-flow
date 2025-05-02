@@ -1,19 +1,19 @@
 import './globals.css';
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import { ThemeProvider } from '@/providers/theme-provider';
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import type {Metadata} from 'next';
+import {Inter} from 'next/font/google';
+import {ThemeProvider} from '@/providers/theme-provider';
+import {authOptions} from '@/pages/api/auth/[...nextauth]';
 import ClientSessionProvider from '@/components/providers/ClientSessionProvider';
-import { getServerSession } from 'next-auth/next';
-import type { Session } from 'next-auth';
-import { ProviderHeroUi } from '@/providers/heroui-provider';
+import {getServerSession} from 'next-auth/next';
+import type {Session} from 'next-auth';
+import {ProviderHeroUi} from '@/providers/heroui-provider';
 
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Dashboard - Next.js Admin',
-  description: 'A modern dashboard built with Next.js and shadcn/ui',
+  title: 'Backoffice PeopleFlow',
+  description: 'Configurations',
 };
 
 export default async function RootLayout({

@@ -5,20 +5,23 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { BarChart2, ChevronLeft, ChevronRight, Home, Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import Logo from '@/assets/images/logo.png';
 import { Button } from '@/components/ui/button';
 import { useSession } from 'next-auth/react';
+import Image from 'next/image';
 
 interface SidebarItem {
+  id: number;
   title: string;
   href: string;
   icon: React.ReactNode;
 }
 
 const sidebarItems: SidebarItem[] = [
-  { title: 'Compañias', href: '/companies', icon: <Home size={20} /> },
-  { title: 'Módulos', href: '/modules', icon: <BarChart2 size={20} /> },
-  { title: 'Usuarios', href: '/users', icon: <Users size={20} /> },
-  { title: 'Configuraciones', href: '/configurations', icon: <Users size={20} /> },
+  { id: 1, title: 'Compañias', href: '/companies', icon: <Home size={20} /> },
+  { id: 2, title: 'Módulos', href: '/modules', icon: <BarChart2 size={20} /> },
+  { id: 3, title: 'Usuarios', href: '/users', icon: <Users size={20} /> },
+  { id: 4, title: 'Configuraciones', href: '/configurations', icon: <Users size={20} /> },
 ];
 
 export function Sidebar() {
@@ -29,19 +32,21 @@ export function Sidebar() {
 
   return (
     <div className={cn(
-      'flex flex-col h-screen border-r border-border bg-card transition-all duration-300',
-      expanded ? 'w-64' : 'w-16',
+      'flex flex-col h-screen border-r ' +
+      'border-border bg-gradient-to-b from-indigo-100 via-purple-100 to-pink-100  00 ' +
+      'transition-all duration-300 dark:from-purple-800 dark:via-blue-900  dark:to-black ',
+      expanded ? 'w-48' : 'w-20',
     )}>
       <div className="flex items-center justify-between h-16 px-4 border-b border-border">
         {expanded ? (
-          <Link href="/dashboard" className="font-semibold text-xl">
-            Dash<span className="text-primary">Board</span>
+          <Link href="/" className="font-semibold text-xl">
+            <Image src={Logo} alt="logo" className="rounded-lg" />
           </Link>
         ) : (
-          <Link href="/dashboard" className="w-full flex justify-center">
+          <Link href="/" className="w-full flex justify-center">
             <div
               className="h-8 w-8 rounded-md bg-primary flex items-center justify-center text-primary-foreground font-bold">
-              D
+              P
             </div>
           </Link>
         )}
@@ -49,7 +54,7 @@ export function Sidebar() {
           variant="ghost"
           size="icon"
           onClick={() => setExpanded(!expanded)}
-          className="ml-auto"
+          className="ml-auto px-3"
         >
           {expanded ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
         </Button>
@@ -71,14 +76,8 @@ export function Sidebar() {
                       : 'hover:bg-muted',
                   )}
                 >
-                  {/*{item.icon}*/}
+                  {item.icon}
                   <span>{item.title}</span>
-                  {item.title === 'Messages' && (
-                    <span
-                      className="ml-auto flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] text-primary-foreground">
-                      5
-                    </span>
-                  )}
                 </Link>
               );
             }
@@ -95,9 +94,6 @@ export function Sidebar() {
                   )}
                 >
                   {item.icon}
-                  {item.title === 'Messages' && (
-                    <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-primary" />
-                  )}
                 </Link>
               </div>
             );
