@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { addToast } from '@heroui/react';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -20,9 +21,11 @@ export default function LoginPage() {
 
     if (res?.ok) {
       router.push('/');
-    } else {
-      alert('Login fallido');
-    }
+    } else
+      addToast({
+        title: 'Credenciales inválidas',
+        color: 'danger',
+      });
   };
 
   return (

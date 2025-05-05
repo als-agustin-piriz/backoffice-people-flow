@@ -7,42 +7,40 @@ import {SubmoduleForm} from '@/app/(dashboard)/modules/components/SubModuleForm/
 import TableModules from '@/app/(dashboard)/modules/components/TableModules/TableModules';
 import {Module, Submodule, ViewState} from '@/types/modules';
 import NoModulesContent from "@/app/(dashboard)/modules/components/NoModulesContent/NoModulesContent";
+import {useModuleManager} from "@/app/(dashboard)/modules/hooks/useModuleManage";
+import {generateGuid} from "@/lib/utils";
 
-const generateGuid = (): string => {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        const r = (Math.random() * 16) | 0;
-        const v = c === 'x' ? r : (r & 0x3) | 0x8;
-        return v.toString(16);
-    });
-};
 
 export default function ModulesPage() {
     const [viewState, setViewState] = useState<ViewState>('list');
-    const [modules, setModules] = useState<Module[]>([]);
-    const [submodules, setSubmodules] = useState<Submodule[]>([]);
     const [currentModule, setCurrentModule] = useState<Module | null>(null);
 
-    const handleSaveModule = (moduleData: Omit<Module, 'id' | 'createdAt'>) => {
+    const {saveModule, modules, submodules, addSubModule} = useModuleManager();
+
+    const shouldShowNewModuleButton = viewState === 'list' && modules.length > 0;
+
+    const handleSaveModule = async (moduleData: Omit<Module, 'id' | 'createdAt'>) => {
         const newModule: Module = {
             ...moduleData,
             id: generateGuid(),
             createdAt: new Date().toISOString(),
         };
-
-        setModules([...modules, newModule]);
-        setCurrentModule(newModule);
-        addToast({
-            title: `Módulo "${newModule.name}" creado exitosamente`,
-            color: 'success'
-        })
-        setViewState('list');
+        const moduleSaved: Module | null = await saveModule(newModule);
+        if (moduleSaved) {
+            addToast({
+                title: 'Módulo creado',
+                color: 'success',
+            });
+            setCurrentModule(moduleSaved);
+            setViewState('list');
+        }
     };
 
     const handleAddSubmodule = (submodule: Submodule) => {
-        setSubmodules([...submodules, submodule]);
+        const newSubModule = addSubModule(submodule);
         if (currentModule) {
             addToast({
-                title: `Submódulo "${submodule.name}" agregado al módulo "${currentModule.name}"`,
+                title: `Submódulo "${newSubModule.name}" agregado al módulo "${currentModule.name}"`,
                 color: 'success'
             })
         }
@@ -59,7 +57,7 @@ export default function ModulesPage() {
             <div className="flex justify-between items-center py-4 px-1">
                 <h1 className="text-2xl font-bold">Gestión de Módulos</h1>
                 <div className="flex gap-3">
-                    {viewState === 'list' && (
+                    {shouldShowNewModuleButton && (
                         <Button
                             color="warning"
                             className="text-white"

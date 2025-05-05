@@ -1,0 +1,40 @@
+{
+  "modules": [
+    {
+      "id": "d52b7ed5-1618-4fa9-8a13-c4f26d5d1ae8",
+      "name": "werew",
+      "description": "werewr",
+      "createdAt": "2025-05-02T19:30:55.193Z"
+    },
+    {
+      "id": "b01d2e8b-ce1b-49a3-ab3e-9dcbc2d71d09",
+      "name": "qweqwe",
+      "description": "qweqwe",
+      "createdAt": "2025-05-02T19:32:52.944Z"
+    },
+    {
+      "id": "63a590dc-3c0f-4dd8-afc5-b149752f5365",
+      "name": "asd",
+      "description": "asd",
+      "createdAt": "2025-05-05T13:29:26.726Z"
+    },
+    {
+      "id": "a51bf96b-b33b-485a-8843-686586d97e4f",
+      "name": "aa",
+      "description": "aaa",
+      "createdAt": "2025-05-05T13:35:28.234Z"
+    },
+    {
+      "id": "f201dfca-9abd-480e-9f97-e2243540a895",
+      "name": "cv",
+      "description": "cvcvb",
+      "createdAt": "2025-05-05T13:48:52.354Z"
+    },
+    {
+      "id": "8327dd7d-6ce8-492c-b46f-c17a7f2699a3",
+      "name": "akjdla",
+      "description": "jqlwekqe",
+      "createdAt": "2025-05-05T19:38:23.834Z"
+    }
+  ]
+}

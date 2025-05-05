@@ -1,14 +1,7 @@
 import { useState } from 'react';
 import { Button, Card } from '@heroui/react';
 import { ChevronLeftIcon, PlusIcon } from 'lucide-react';
-
-const generateGuid = () => {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    const r = Math.random() * 16 | 0;
-    const v = c === 'x' ? r : (r & 0x3 | 0x8);
-    return v.toString(16);
-  });
-};
+import { generateGuid } from '@/lib/utils';
 
 export const SubmoduleForm = ({ moduleId, moduleName, onSave, onBack }) => {
   const [submoduleName, setSubmoduleName] = useState('');

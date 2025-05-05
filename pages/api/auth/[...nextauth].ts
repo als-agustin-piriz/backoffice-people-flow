@@ -1,6 +1,7 @@
 // @ts-expect-error error expected
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { fetchApi } from '@/lib/fetchApi';
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -9,36 +10,24 @@ export const authOptions: NextAuthOptions = {
                 email: {},
                 password: {},
             },
-            // @ts-expect-error expected
-            async authorize(credentials) {
-                // const res = await fetch("https://tu-api.com/login", {
-                //     method: "POST",
-                //     headers: { "Content-Type": "application/json" },
-                //     body: JSON.stringify(credentials),
-                // });
+          // @ts-expect-error expected
+          async authorize(credentials) {
+            const res = await fetchApi(`${process.env.NEXTAPI_URL}/api/BackofficeUsers/Login`, {
+              method: 'POST',
+              body: credentials,
+            });
 
-                // const user = await res.json();
-
-                const res = {
-                    ok: true,
-                }
-                const user = {
-                    ok: true,
-                    token: 'faketoken',
-                    name: 'Agu',
-                  modules: ['companies:read', 'modules:read', 'users:read', 'configurations:read'],
-                }
-
-                console.log('res', credentials);
-
-                if (res.ok && user) {
-                    return user;
-                }
-
+            console.log('RES', res);
+            if (res.token) {
+              return {
+                token: res.token,
+                name: 'Agu',
+                modules: ['companies:read', 'modules:read', 'users:read', 'configurations:read'],
+              };
+            } else 
                 return null;
             }
         }),
-        // GoogleProvider
     ],
     callbacks: {
         async jwt({token, user}) {

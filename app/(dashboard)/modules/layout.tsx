@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth/next';
 import { redirect } from 'next/navigation';
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { hasAnyAccess } from '@/lib/permissions';
+import { authOptions } from '@/pages/api/auth/[...nextauth]';
 
 export default async function ModulesLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);

@@ -61,7 +61,7 @@ export default function TableModules({ openSubmoduleView, modules, submodules }:
                       {moduleSubmodules.map((submodule) => (
                         <Tooltip
                           key={submodule.id}
-                          content={submodule.description || 'Sin descripción'}
+                          content={'Sin descripción'}
                         >
                           <Chip
                             color="warning"

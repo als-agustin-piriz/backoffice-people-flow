@@ -2,11 +2,11 @@ import './globals.css';
 import type {Metadata} from 'next';
 import {Inter} from 'next/font/google';
 import {ThemeProvider} from '@/providers/theme-provider';
-import {authOptions} from '@/pages/api/auth/[...nextauth]';
 import ClientSessionProvider from '@/components/providers/ClientSessionProvider';
 import {getServerSession} from 'next-auth/next';
 import type {Session} from 'next-auth';
 import {ProviderHeroUi} from '@/providers/heroui-provider';
+import { authOptions } from '@/pages/api/auth/[...nextauth]';
 
 
 const inter = Inter({ subsets: ['latin'] });
