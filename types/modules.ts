@@ -1,13 +1,14 @@
 export type Module = {
+  id: number;
   name: string;
   description?: string;
   createdAt: string;
 };
 
 export type Submodule = {
-  id: string;
+  id: number;
   name: string;
-  moduleId: string;
+  moduleId: number;
 };
 
 export type NotificationModule = {
