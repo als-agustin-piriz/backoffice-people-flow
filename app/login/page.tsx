@@ -13,20 +13,21 @@ export default function LoginPage() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const res = await signIn('credentials', {
-      email,
-      password,
-      redirect: false,
-    });
-
-    if (res?.ok) {
-      router.push('/');
-    } else
-      addToast({
-        title: 'Credenciales inválidas',
-        color: 'danger',
+    if (email && password) {
+      const res = await signIn('credentials', {
+        email,
+        password,
+        redirect: false,
       });
-  };
+      if (res?.ok) {
+        router.push('/');
+      } else
+        addToast({
+          title: 'Credenciales inválidas',
+          color: 'danger',
+        });
+    }
+  }
 
   return (
     <div

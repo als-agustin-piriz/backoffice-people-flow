@@ -3,7 +3,7 @@ import { Button, Card } from '@heroui/react';
 import { ChevronLeftIcon, PlusIcon } from 'lucide-react';
 import { generateGuid } from '@/lib/utils';
 
-export const SubmoduleForm = ({ moduleId, moduleName, onSave, onBack }) => {
+export const SubmoduleForm = ({ moduleName, onSave, onBack }) => {
   const [submoduleName, setSubmoduleName] = useState('');
   const [saving, setSaving] = useState(false);
 
@@ -12,12 +12,10 @@ export const SubmoduleForm = ({ moduleId, moduleName, onSave, onBack }) => {
 
     setSaving(true);
 
-    // Simulamos una operación asíncrona
     setTimeout(() => {
       const newSubmodule = {
         id: generateGuid(),
         name: submoduleName,
-        moduleId: moduleId,
       };
 
       onSave(newSubmodule);
@@ -30,7 +28,6 @@ export const SubmoduleForm = ({ moduleId, moduleName, onSave, onBack }) => {
     <Card className="p-6 shadow-md">
       <div className="mb-6">
         <h2 className="text-xl font-semibold mb-2">Agregar submódulo para {moduleName}</h2>
-        <p className="text-gray-500 text-sm">ID del módulo: {moduleId}</p>
       </div>
 
       <div className="space-y-4 mb-6">

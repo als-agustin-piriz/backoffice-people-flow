@@ -2,6 +2,7 @@
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { fetchApi } from '@/lib/fetchApi';
+import { apiRoutes } from '@/lib/routes';
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -12,19 +13,18 @@ export const authOptions: NextAuthOptions = {
             },
           // @ts-expect-error expected
           async authorize(credentials) {
-            const res = await fetchApi(`${process.env.NEXTAPI_URL}/api/BackofficeUsers/Login`, {
+            const res = await fetchApi(apiRoutes.login, {
               method: 'POST',
               body: credentials,
             });
 
-            console.log('RES', res);
             if (res.token) {
               return {
                 token: res.token,
                 name: 'Agu',
                 modules: ['companies:read', 'modules:read', 'users:read', 'configurations:read'],
               };
-            } else 
+            } else
                 return null;
             }
         }),

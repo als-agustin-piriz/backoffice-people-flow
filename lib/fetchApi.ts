@@ -8,9 +8,6 @@ export async function fetchApi<T = any>(
 ): Promise<any> {
   const { method = 'GET', body, headers = {} } = options;
 
-  console.log('URL', url);
-  console.log('URL', body);
-
   try {
     const res = await fetch(url, {
       method,
@@ -24,7 +21,6 @@ export async function fetchApi<T = any>(
     if (!res.ok) {
       return res;
     }
-
     return res.json();
   } catch (error) {
     console.log('ERROR', error);

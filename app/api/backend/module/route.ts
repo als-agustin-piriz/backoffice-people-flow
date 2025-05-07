@@ -1,13 +1,19 @@
 import { fetchApiWithAuth } from '@/lib/fetchApiWithAuth';
-import { withAuthToken } from '@/lib/withAuthToken';
+import { apiRoutes } from '@/lib/routes';
 
-export const POST = withAuthToken(async (req: any, { accessToken }) => {
+export const POST = async (req: Request) => {
   const body = await req.json();
 
-  const data = await fetchApiWithAuth(`${process.env.NEXTAPI_URL}/modules`, accessToken, {
+  const data = await fetchApiWithAuth(apiRoutes.modules.createModule, {
     method: 'POST',
     body,
   });
 
   return Response.json(data);
-});
+};
+
+export const GET = async () => {
+  const data = await fetchApiWithAuth(apiRoutes.modules.getModules);
+
+  return Response.json(data);
+};

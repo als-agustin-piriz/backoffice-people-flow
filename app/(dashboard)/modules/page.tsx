@@ -1,14 +1,13 @@
 'use client';
-import {useState} from 'react';
-import {addToast, Button, Card} from '@heroui/react';
-import {ChevronLeftIcon, PlusIcon} from 'lucide-react';
-import {NewModuleForm} from '@/app/(dashboard)/modules/components/NewModuleForm/NewModuleForm';
-import {SubmoduleForm} from '@/app/(dashboard)/modules/components/SubModuleForm/SubmoduleForm';
+import { useState } from 'react';
+import { addToast, Button, Card } from '@heroui/react';
+import { ChevronLeftIcon, PlusIcon } from 'lucide-react';
+import { NewModuleForm } from '@/app/(dashboard)/modules/components/NewModuleForm/NewModuleForm';
+import { SubmoduleForm } from '@/app/(dashboard)/modules/components/SubModuleForm/SubmoduleForm';
 import TableModules from '@/app/(dashboard)/modules/components/TableModules/TableModules';
-import {Module, Submodule, ViewState} from '@/types/modules';
-import NoModulesContent from "@/app/(dashboard)/modules/components/NoModulesContent/NoModulesContent";
-import {useModuleManager} from "@/app/(dashboard)/modules/hooks/useModuleManage";
-import {generateGuid} from "@/lib/utils";
+import { Module, Submodule, ViewState } from '@/types/modules';
+import NoModulesContent from '@/app/(dashboard)/modules/components/NoModulesContent/NoModulesContent';
+import { useModuleManager } from '@/app/(dashboard)/modules/hooks/useModuleManage';
 
 
 export default function ModulesPage() {
@@ -22,7 +21,6 @@ export default function ModulesPage() {
     const handleSaveModule = async (moduleData: Omit<Module, 'id' | 'createdAt'>) => {
         const newModule: Module = {
             ...moduleData,
-            id: generateGuid(),
             createdAt: new Date().toISOString(),
         };
         const moduleSaved: Module | null = await saveModule(newModule);
@@ -103,7 +101,6 @@ export default function ModulesPage() {
 
             {viewState === 'add-submodule' && currentModule && (
                 <SubmoduleForm
-                    moduleId={currentModule.id}
                     moduleName={currentModule.name}
                     onSave={handleAddSubmodule}
                     onBack={() => setViewState('list')}

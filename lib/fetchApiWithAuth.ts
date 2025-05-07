@@ -1,21 +1,29 @@
-export async function fetchApiWithAuth<T = any>(
+import { Session } from 'next-auth';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/pages/api/auth/[...nextauth]';
+
+export async function fetchApiWithAuth(
   url: string,
-  accessToken: string,
   options: {
     method?: 'GET' | 'POST' | 'PUT' | 'DELETE',
     body?: any,
-    headers?: Record<string, string>,
   } = {},
-): Promise<T> {
-  const { method = 'GET', body, headers = {} } = options;
-  console.log('at', accessToken);
+): Promise<Response> {
+  const { method = 'GET', body } = options;
+
+  const session: Session | null = await getServerSession(authOptions);
+
+  const token = session?.accessToken;
+
+  if (!token) {
+    return new Response('Unauthorized', { status: 401 });
+  }
 
   const res = await fetch(url, {
     method,
     headers: {
-      'Authorization': `Bearer ${accessToken}`,
+      'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json',
-      ...headers,
     },
     ...(body ? { body: JSON.stringify(body) } : {}),
   });

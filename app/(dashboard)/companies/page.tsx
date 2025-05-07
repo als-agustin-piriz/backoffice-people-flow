@@ -1,5 +1,4 @@
 import { ChartCard } from '@/components/dashboard/chart-card';
-import { withAuthServer } from '@/lib/with-auth-server';
 
 
 // Sample data - In a real app, this would come from an API or database
@@ -36,7 +35,6 @@ const deviceData = [
 ];
 
 export default function CompaniesPage() {
-  return withAuthServer(['companies:read'], async () => {
     return (
       <div className="space-y-6">
         <div className="grid gap-6 grid-cols-1">
@@ -70,5 +68,4 @@ export default function CompaniesPage() {
         </div>
       </div>
     );
-  });
 }
