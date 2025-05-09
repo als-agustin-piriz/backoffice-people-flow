@@ -15,23 +15,25 @@ export const NewModuleForm: React.FC<NewModuleFormProps> = (
   }) => {
   const [title, setTitle] = React.useState<string>('');
   const [description, setDescription] = React.useState<string>('');
+  const [basePrice, setBasePrice] = React.useState<string>('');
 
-  const onChangeTitle = ({ target }) => {
+  const onChangeTitle = ({ target }: any) => {
     setTitle(target.value);
   };
-  const onChangeDescription = ({ target }) => {
+  const onChangeDescription = ({ target }: any) => {
     setDescription(target.value);
+  };
+  const onChangePrice = ({ target }: any) => {
+    setBasePrice(target.value);
   };
 
   const onFetchModule = () => {
-    // eslint-disable-next-line @next/next/no-assign-module-variable
-    const module: Module = {
+    const dataModule = {
       name: title,
       description,
-      id: '',
-      createdAt: '',
+      basePrice: Number(basePrice),
     };
-    onSaveModule(module);
+    onSaveModule(dataModule);
   };
 
   return (
@@ -42,6 +44,9 @@ export const NewModuleForm: React.FC<NewModuleFormProps> = (
         </div>
         <div>
           <Textarea label="Descripción" onChange={onChangeDescription} />
+        </div>
+        <div>
+          <Input label="Precio" type="number" onChange={onChangePrice} size="sm" />
         </div>
         <div className="flex justify-center">
           <Button onPress={onFetchModule} color="success" className="text-white">Guardar</Button>

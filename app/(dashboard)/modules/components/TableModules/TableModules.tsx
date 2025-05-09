@@ -1,5 +1,4 @@
 'use client';
-
 import { useMemo, useState } from 'react';
 import { Button, Chip, Tooltip } from '@heroui/react';
 import { ChevronLeftIcon, ChevronRightIcon, PlusCircleIcon } from 'lucide-react';
@@ -7,6 +6,7 @@ import { Module, Submodule } from '@/types/modules';
 
 type Props = {
   openSubmoduleView: (module: Module) => void;
+  onDeleteModule: (module: Module) => void;
   modules: Module[];
   submodules: Submodule[];
   itemsPerPage?: number;
@@ -15,6 +15,7 @@ type Props = {
 export default function TableModules(
   {
     openSubmoduleView,
+    onDeleteModule,
     modules,
     submodules,
     itemsPerPage = 5,
@@ -47,6 +48,9 @@ export default function TableModules(
             </th>
             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Submódulos
+            </th>
+            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Precio
             </th>
             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Fecha de creación
@@ -101,23 +105,39 @@ export default function TableModules(
                       </span>
                   )}
                 </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <code className="px-2 py-1 rounded text-sm">
+                    ${module.basePrice}
+                  </code>
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm">
-                  {new Date(module.createdAt).toLocaleDateString('es-ES', {
+                  {module.created && new Date(module?.created).toLocaleDateString('es-ES', {
                     year: 'numeric',
                     month: 'short',
                     day: 'numeric',
                   })}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <Button
-                    size="sm"
-                    color="primary"
-                    variant="flat"
-                    onPress={() => openSubmoduleView(module)}
-                    startContent={<PlusCircleIcon size={14} />}
-                  >
-                    Agregar submódulo
-                  </Button>
+                  <div className="flex items-center">
+                    <Button
+                      size="sm"
+                      color="primary"
+                      variant="flat"
+                      onPress={() => openSubmoduleView(module)}
+                      startContent={<PlusCircleIcon size={14} />}
+                    >
+                      Agregar submódulo
+                    </Button>
+                    <Button
+                      size="sm"
+                      color="danger"
+                      variant="flat"
+                      onPress={() => onDeleteModule(module)}
+                      startContent={<PlusCircleIcon size={14} />}
+                    >
+                      Eliminar módulo
+                    </Button>
+                  </div>
                 </td>
               </tr>
             );

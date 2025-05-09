@@ -1,7 +1,9 @@
+import { Session } from 'next-auth';
+
 export function hasAnyAccess(
-  session: any,
-    requiredModules: string[]
+  session: Session,
+  requiredModules: string[],
 ): boolean {
-    if (!session || !session.user?.modules) return false;
-    return requiredModules.some((mod) => session.user.modules.includes(mod));
+  if (!session || !session.user?.modules) return false;
+  return requiredModules.some((mod) => session.user.modules.includes(mod));
 }

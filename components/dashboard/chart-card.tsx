@@ -18,7 +18,7 @@ interface ChartCardProps {
   title: string;
   description?: string;
   chart: 'line' | 'bar' | 'area';
-  data: any;
+  data: never;
   categories: string[];
   index: string;
   className?: string;

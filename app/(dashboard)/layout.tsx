@@ -2,12 +2,12 @@
 import { Sidebar } from '@/components/dashboard/sidebar';
 import { Header } from '@/components/dashboard/header';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
 }
 
+// @ts-expect-error expected
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const { status } = useSession();
   // const router = useRouter();

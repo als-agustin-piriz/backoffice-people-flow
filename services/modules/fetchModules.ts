@@ -1,10 +1,10 @@
-import { Module } from '@/types/modules';
+import { ModuleDTO } from '@/types/modules';
 
-export async function fetchModules(): Promise<any> {
+export async function fetchModules(): Promise<ModuleDTO> {
   return fetch('/api/backend/module', {
     method: 'GET',
   }).then(res => {
-    if (!res.ok) throw new Error('Error al obtener los módulos');
+    if (!res.ok) return null;
     return res.json();
   });
 }

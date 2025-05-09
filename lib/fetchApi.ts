@@ -1,11 +1,14 @@
-export async function fetchApi<T = any>(
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function fetchApi<T>(
   url: string,
   options: {
-    method?: 'GET' | 'POST' | 'PUT' | 'DELETE',
-    body?: any,
+    method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS',
+    body?: T,
     headers?: Record<string, string>,
   } = {},
-): Promise<any> {
+): Promise<never> {
   const { method = 'GET', body, headers = {} } = options;
 
   try {

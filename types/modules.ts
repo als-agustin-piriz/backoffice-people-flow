@@ -1,19 +1,25 @@
 export type Module = {
-  id: number;
+  id?: number;
   name: string;
   description?: string;
-  createdAt: string;
+  created?: string;
+  basePrice: number;
+  items?: Submodule[]
 };
 
 export type Submodule = {
-  id: number;
+  id?: number;
   name: string;
-  moduleId: number;
+  moduleId?: number;
 };
 
-export type NotificationModule = {
-  message: string;
-  type: 'success' | 'info';
+export type ModuleDTO = {
+  items: Module[],
+  pageNumber: number,
+  totalPages: number,
+  totalCount: number,
+  hasPreviousPage: boolean,
+  hasNextPage: boolean
 };
 
-export type ViewState = 'list' | 'new-module' | 'add-submodule';
+export type ViewState = 'list' | 'new-module' | 'add-submodule' | 'loading';

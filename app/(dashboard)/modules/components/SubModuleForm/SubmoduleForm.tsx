@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import { Button, Card } from '@heroui/react';
 import { ChevronLeftIcon, PlusIcon } from 'lucide-react';
-import { generateGuid } from '@/lib/utils';
+import { Submodule } from '@/types/modules';
 
-export const SubmoduleForm = ({ moduleName, onSave, onBack }) => {
+export const SubmoduleForm = ({ moduleName, onSave, onBack }: {
+  moduleName: string,
+  onSave: (subModule: Submodule) => void,
+  onBack: () => void
+}) => {
   const [submoduleName, setSubmoduleName] = useState('');
   const [saving, setSaving] = useState(false);
 
@@ -13,8 +17,7 @@ export const SubmoduleForm = ({ moduleName, onSave, onBack }) => {
     setSaving(true);
 
     setTimeout(() => {
-      const newSubmodule = {
-        id: generateGuid(),
+      const newSubmodule: Submodule = {
         name: submoduleName,
       };
 
