@@ -3,6 +3,8 @@ import { useMemo, useState } from 'react';
 import { Button, Chip, Tooltip } from '@heroui/react';
 import { ChevronLeftIcon, ChevronRightIcon, PlusCircleIcon } from 'lucide-react';
 import { Module, Submodule } from '@/types/modules';
+import { ModalComponent } from '@/components/ModalComponent/ModalComponent';
+import { useModal } from '@/hooks/useModal';
 
 type Props = {
   openSubmoduleView: (module: Module) => void;
@@ -21,8 +23,10 @@ export default function TableModules(
     itemsPerPage = 5,
   }: Props) {
   const [currentPage, setCurrentPage] = useState(1);
-
   const totalPages = Math.ceil(modules.length / itemsPerPage);
+
+  const { isOpen, onOpen, onClose, backdrop } = useModal();
+  const [moduleToDelete, setModuleToDelete] = useState<Module | null>(null);
 
   const currentModules = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -32,6 +36,17 @@ export default function TableModules(
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
+  };
+  const onDelete = (module: Module) => {
+    setModuleToDelete(module);
+    onOpen();
+  };
+
+  const handleAction = () => {
+    if (moduleToDelete) {
+      onDeleteModule(moduleToDelete);
+      onClose();
+    }
   };
 
   return (
@@ -118,7 +133,7 @@ export default function TableModules(
                   })}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex items-center">
+                  <div className="flex items-center gap-3">
                     <Button
                       size="sm"
                       color="primary"
@@ -132,7 +147,7 @@ export default function TableModules(
                       size="sm"
                       color="danger"
                       variant="flat"
-                      onPress={() => onDeleteModule(module)}
+                      onPress={() => onDelete(module)}
                       startContent={<PlusCircleIcon size={14} />}
                     >
                       Eliminar módulo
@@ -189,6 +204,20 @@ export default function TableModules(
           </div>
         </div>
       )}
+      <ModalComponent
+        isOpen={isOpen}
+        onClose={onClose}
+        backdrop={backdrop}
+        title="Eliminar módulo"
+        description={
+          <>
+            <p>¿Estás seguro de que querés eliminar el módulo?</p>
+          </>
+        }
+        onAction={handleAction}
+        actionLabel="Confirmar"
+        actionColor="danger"
+      />
     </div>
   );
 }
