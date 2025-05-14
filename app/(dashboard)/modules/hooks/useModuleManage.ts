@@ -54,7 +54,9 @@ export const useModuleManager = () => {
       console.log('Error creating module:', err);
       return null;
     }
+    return null;
   };
+
 
   useEffect(() => {
     const onGetModules = async () => {

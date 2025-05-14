@@ -3,7 +3,7 @@ import { apiRoutes } from '@/lib/routes';
 import { NextResponse } from 'next/server';
 
 export const DELETE = async (
-  req: NextResponse,
+  _req: NextResponse,
   { params }: { params: { moduleId: string } },
 ) => {
   const { moduleId } = params;

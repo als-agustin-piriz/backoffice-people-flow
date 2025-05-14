@@ -1,10 +1,13 @@
+// components/TableModules/TableModules.tsx
 'use client';
+
 import { useMemo, useState } from 'react';
-import { Button, Chip, Tooltip } from '@heroui/react';
-import { ChevronLeftIcon, ChevronRightIcon, PlusCircleIcon } from 'lucide-react';
 import { Module, Submodule } from '@/types/modules';
-import { ModalComponent } from '@/components/ModalComponent/ModalComponent';
 import { useModal } from '@/hooks/useModal';
+import { ModalComponent } from '@/components/ModalComponent/ModalComponent';
+import { TablePagination } from '@/app/(dashboard)/modules/components/TableModules/components/TablePagination';
+import { TableRow } from '@/app/(dashboard)/modules/components/TableModules/components/TableRow';
+import { TableHeader } from '@/app/(dashboard)/modules/components/TableModules/components/TableHeader';
 
 type Props = {
   openSubmoduleView: (module: Module) => void;
@@ -23,26 +26,21 @@ export default function TableModules(
     itemsPerPage = 5,
   }: Props) {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(modules.length / itemsPerPage);
-
-  const { isOpen, onOpen, onClose, backdrop } = useModal();
   const [moduleToDelete, setModuleToDelete] = useState<Module | null>(null);
+  const { isOpen, onOpen, onClose, backdrop } = useModal();
 
+  const totalPages = Math.ceil(modules.length / itemsPerPage);
   const currentModules = useMemo(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    return modules.slice(startIndex, endIndex);
+    const start = (currentPage - 1) * itemsPerPage;
+    return modules.slice(start, start + itemsPerPage);
   }, [modules, currentPage, itemsPerPage]);
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-  const onDelete = (module: Module) => {
+  const handleDelete = (module: Module) => {
     setModuleToDelete(module);
     onOpen();
   };
 
-  const handleAction = () => {
+  const confirmDelete = () => {
     if (moduleToDelete) {
       onDeleteModule(moduleToDelete);
       onClose();
@@ -53,168 +51,38 @@ export default function TableModules(
     <div className="bg-white rounded-lg shadow-sm flex flex-col h-full min-h-[500px] w-full justify-between">
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead>
-          <tr className="bg-gray-50 border-b">
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Nombre
-            </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              ID
-            </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Submódulos
-            </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Precio
-            </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Fecha de creación
-            </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Acciones
-            </th>
-          </tr>
-          </thead>
+          <TableHeader />
           <tbody>
-          {currentModules.map((module) => {
-            const moduleSubmodules = submodules.filter(
-              (sub) => sub.moduleId === module.id,
-            );
-
-            return (
-              <tr key={module.id} className="hover:bg-gray-50 border-b">
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="font-medium text-sm">{module.name}</div>
-                  {module.description && (
-                    <div className="text-sm text-gray-500">
-                      {module.description}
-                    </div>
-                  )}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <code className="bg-gray-100 px-2 py-1 rounded text-sm">
-                    {module.id}
-                  </code>
-                </td>
-                <td className="px-6 py-4">
-                  {moduleSubmodules.length > 0 ? (
-                    <div className="flex flex-wrap gap-2">
-                      {moduleSubmodules.map((submodule) => (
-                        <Tooltip
-                          key={submodule.id}
-                          content={'Sin descripción'}
-                        >
-                          <Chip
-                            color="warning"
-                            variant="flat"
-                            size="sm"
-                          >
-                            {submodule.name}
-                          </Chip>
-                        </Tooltip>
-                      ))}
-                    </div>
-                  ) : (
-                    <span className="text-gray-400 text-sm">
-                        Sin submódulos
-                      </span>
-                  )}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <code className="px-2 py-1 rounded text-sm">
-                    ${module.basePrice}
-                  </code>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm">
-                  {module.created && new Date(module?.created).toLocaleDateString('es-ES', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
-                  })}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex items-center gap-3">
-                    <Button
-                      size="sm"
-                      color="primary"
-                      variant="flat"
-                      onPress={() => openSubmoduleView(module)}
-                      startContent={<PlusCircleIcon size={14} />}
-                    >
-                      Agregar submódulo
-                    </Button>
-                    <Button
-                      size="sm"
-                      color="danger"
-                      variant="flat"
-                      onPress={() => onDelete(module)}
-                      startContent={<PlusCircleIcon size={14} />}
-                    >
-                      Eliminar módulo
-                    </Button>
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
+          {currentModules.map((module) => (
+            <TableRow
+              key={module.id}
+              module={module}
+              submodules={submodules}
+              onDelete={handleDelete}
+              onOpenSubmodules={openSubmoduleView}
+            />
+          ))}
           </tbody>
         </table>
       </div>
 
       {totalPages > 1 && (
-        <div className="flex justify-between items-center px-6 py-4 border-t">
-          <div className="text-sm text-gray-500">
-            Mostrando {((currentPage - 1) * itemsPerPage) + 1} a {Math.min(currentPage * itemsPerPage, modules.length)} de {modules.length} módulos
-          </div>
-
-          <div className="flex items-center space-x-2">
-            <Button
-              size="sm"
-              variant="flat"
-              isDisabled={currentPage === 1}
-              onPress={() => handlePageChange(currentPage - 1)}
-              startContent={<ChevronLeftIcon size={16} />}
-            >
-              Anterior
-            </Button>
-
-            <div className="flex items-center space-x-1">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                <Button
-                  key={page}
-                  size="sm"
-                  variant={page === currentPage ? 'solid' : 'flat'}
-                  color={page === currentPage ? 'primary' : 'default'}
-                  onPress={() => handlePageChange(page)}
-                >
-                  {page}
-                </Button>
-              ))}
-            </div>
-
-            <Button
-              size="sm"
-              variant="flat"
-              isDisabled={currentPage === totalPages}
-              onPress={() => handlePageChange(currentPage + 1)}
-              endContent={<ChevronRightIcon size={16} />}
-            >
-              Siguiente
-            </Button>
-          </div>
-        </div>
+        <TablePagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+          totalItems={modules.length}
+          itemsPerPage={itemsPerPage}
+        />
       )}
+
       <ModalComponent
         isOpen={isOpen}
         onClose={onClose}
         backdrop={backdrop}
         title="Eliminar módulo"
-        description={
-          <>
-            <p>¿Estás seguro de que querés eliminar el módulo?</p>
-          </>
-        }
-        onAction={handleAction}
+        description={<p>¿Estás seguro de que querés eliminar el módulo?</p>}
+        onAction={confirmDelete}
         actionLabel="Confirmar"
         actionColor="danger"
       />

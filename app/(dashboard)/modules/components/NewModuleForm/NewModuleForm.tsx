@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { Input, Textarea } from '@heroui/input';
 import { Module } from '@/types/modules';
 import { Button } from '@heroui/react';
@@ -17,13 +17,13 @@ export const NewModuleForm: React.FC<NewModuleFormProps> = (
   const [description, setDescription] = React.useState<string>('');
   const [basePrice, setBasePrice] = React.useState<string>('');
 
-  const onChangeTitle = ({ target }: any) => {
+  const onChangeTitle = ({ target }: ChangeEvent<HTMLInputElement>) => {
     setTitle(target.value);
   };
-  const onChangeDescription = ({ target }: any) => {
+  const onChangeDescription = ({ target }: ChangeEvent<HTMLInputElement>) => {
     setDescription(target.value);
   };
-  const onChangePrice = ({ target }: any) => {
+  const onChangePrice = ({ target }: ChangeEvent<HTMLInputElement>) => {
     setBasePrice(target.value);
   };
 
