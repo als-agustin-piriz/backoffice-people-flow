@@ -11,6 +11,7 @@ export const useModuleManager = () => {
   const [modules, setModules] = useState<Module[]>([]);
   const [submodules, setSubmodules] = useState<Submodule[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadingDelete, setLoadingDelete] = useState(false);
 
   const saveModule = async (moduleData: Module) => {
     try {
@@ -32,6 +33,7 @@ export const useModuleManager = () => {
 
   const onDeleteModule = async (moduleData: Module) => {
     try {
+      setLoadingDelete(true);
       if (moduleData.id) {
         const data = await deleteModule(moduleData.id);
         if (data) {
@@ -42,9 +44,9 @@ export const useModuleManager = () => {
             title: 'Módulo eliminado',
             color: 'success',
           });
-          return data;
+          return true;
         }
-        return null;
+        return false;
       }
     } catch (err) {
       addToast({
@@ -52,9 +54,10 @@ export const useModuleManager = () => {
         color: 'danger',
       });
       console.log('Error creating module:', err);
-      return null;
+      return false;
     }
-    return null;
+    setLoadingDelete(false);
+    return false;
   };
 
 
@@ -81,9 +84,10 @@ export const useModuleManager = () => {
         return data;
       }
       return null;
-    } catch (err) {
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Ocurrió un error inesperado';
       addToast({
-        title: 'Error al crear módulo',
+        title: message,
         color: 'danger',
       });
       console.log('Error creating module:', err);
@@ -99,5 +103,6 @@ export const useModuleManager = () => {
     onDeleteModule,
     addSubModule,
     loadingModules: loading,
+    loadingDelete: loadingDelete,
   };
 };

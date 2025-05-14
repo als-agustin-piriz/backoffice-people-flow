@@ -17,6 +17,7 @@ interface ModalProps {
   onAction?: () => void;
   actionLabel?: string;
   actionColor?: 'primary' | 'danger' | 'success' | 'warning';
+  isLoading?: boolean;
 }
 
 export const ModalComponent = (
@@ -29,6 +30,7 @@ export const ModalComponent = (
     onAction,
     actionLabel = 'Aceptar',
     actionColor = 'primary',
+    isLoading = false,
   }: ModalProps) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} backdrop={backdrop}>
@@ -41,7 +43,7 @@ export const ModalComponent = (
               Cancelar
             </Button>
             {onAction && (
-              <Button color={actionColor} onPress={onAction}>
+              <Button color={actionColor} onPress={onAction} isLoading={isLoading}>
                 {actionLabel}
               </Button>
             )}

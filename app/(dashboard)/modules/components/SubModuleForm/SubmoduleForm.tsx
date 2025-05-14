@@ -13,7 +13,6 @@ export const SubmoduleForm = ({ moduleName, onSave, onBack }: {
 
   const handleSaveSubmodule = () => {
     if (!submoduleName) return;
-
     setSaving(true);
 
     setTimeout(() => {

@@ -15,7 +15,15 @@ export default function ModulesPage() {
   const [viewState, setViewState] = useState<ViewState>('list');
   const [currentModule, setCurrentModule] = useState<Module | null>(null);
 
-  const { saveModule, modules, submodules, addSubModule, loadingModules, onDeleteModule } = useModuleManager();
+  const {
+    saveModule,
+    modules,
+    submodules,
+    addSubModule,
+    loadingModules,
+    onDeleteModule,
+    loadingDelete,
+  } = useModuleManager();
 
   const shouldShowNewModuleButton = viewState === 'list' && modules.length > 0;
 
@@ -102,6 +110,7 @@ export default function ModulesPage() {
               onDeleteModule={onDeleteModule}
               modules={modules}
               submodules={submodules}
+              loadingDelete={loadingDelete}
             />
           ) : (
             <NoModulesContent setViewState={setViewState} />

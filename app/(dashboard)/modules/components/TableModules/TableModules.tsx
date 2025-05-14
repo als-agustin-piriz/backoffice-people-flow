@@ -1,4 +1,3 @@
-// components/TableModules/TableModules.tsx
 'use client';
 
 import { useMemo, useState } from 'react';
@@ -11,10 +10,11 @@ import { TableHeader } from '@/app/(dashboard)/modules/components/TableModules/c
 
 type Props = {
   openSubmoduleView: (module: Module) => void;
-  onDeleteModule: (module: Module) => void;
+  onDeleteModule: (module: Module) => Promise<boolean>;
   modules: Module[];
   submodules: Submodule[];
   itemsPerPage?: number;
+  loadingDelete?: boolean
 };
 
 export default function TableModules(
@@ -24,6 +24,7 @@ export default function TableModules(
     modules,
     submodules,
     itemsPerPage = 5,
+    loadingDelete = false,
   }: Props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [moduleToDelete, setModuleToDelete] = useState<Module | null>(null);
@@ -40,10 +41,10 @@ export default function TableModules(
     onOpen();
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (moduleToDelete) {
-      onDeleteModule(moduleToDelete);
-      onClose();
+      const wasDeleted = await onDeleteModule(moduleToDelete);
+      if (wasDeleted) onClose();
     }
   };
 
@@ -85,6 +86,7 @@ export default function TableModules(
         onAction={confirmDelete}
         actionLabel="Confirmar"
         actionColor="danger"
+        isLoading={loadingDelete}
       />
     </div>
   );
