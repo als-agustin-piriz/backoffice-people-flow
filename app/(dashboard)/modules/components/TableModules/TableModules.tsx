@@ -10,6 +10,7 @@ import { TableHeader } from '@/app/(dashboard)/modules/components/TableModules/c
 
 type Props = {
   openSubmoduleView: (module: Module) => void;
+  onEditModule: (module: Module) => void;
   onDeleteModule: (module: Module) => Promise<boolean>;
   modules: Module[];
   submodules: Submodule[];
@@ -21,6 +22,7 @@ export default function TableModules(
   {
     openSubmoduleView,
     onDeleteModule,
+    onEditModule,
     modules,
     submodules,
     itemsPerPage = 5,
@@ -61,6 +63,7 @@ export default function TableModules(
               submodules={submodules}
               onDelete={handleDelete}
               onOpenSubmodules={openSubmoduleView}
+              onEditModule={onEditModule}
             />
           ))}
           </tbody>

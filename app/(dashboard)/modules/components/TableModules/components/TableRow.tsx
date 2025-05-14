@@ -9,11 +9,12 @@ type Props = {
   submodules: Submodule[];
   onDelete: (m: Module) => void;
   onOpenSubmodules: (m: Module) => void;
+  onEditModule: (m: Module) => void;
 };
 
-export function TableRow({ module, submodules, onDelete, onOpenSubmodules }: Props) {
+export function TableRow({ module, submodules, onDelete, onOpenSubmodules, onEditModule }: Props) {
   const moduleSubmodules = submodules.filter((s) => s.moduleId === module.id);
-  const [isActive, setIsActive] = useState(module.isActive);
+  const [isActive, setIsActive] = useState(module?.isActive || false);
   const { onUpdateModule } = useModuleManager();
 
   const onChangeStatus = async (status: boolean) => {
@@ -23,9 +24,9 @@ export function TableRow({ module, submodules, onDelete, onOpenSubmodules }: Pro
     };
 
     if (module?.id) {
-      const moduleUpdated = await onUpdateModule({ moduleId: module.id, newDataModule: newModule });
+      const moduleUpdated: Module | false = await onUpdateModule({ moduleId: module.id, newDataModule: newModule });
       if (moduleUpdated) {
-        setIsActive(moduleUpdated.isActive);
+        setIsActive(moduleUpdated.isActive ?? false);
       }
     }
   };
@@ -107,6 +108,15 @@ export function TableRow({ module, submodules, onDelete, onOpenSubmodules }: Pro
             startContent={<PlusCircleIcon size={14} />}
           >
             Agregar submódulo
+          </Button>
+          <Button
+            size="sm"
+            color="primary"
+            variant="flat"
+            onPress={() => onEditModule(module)}
+            startContent={<PlusCircleIcon size={14} />}
+          >
+            Editar módulo
           </Button>
           <Button
             size="sm"

@@ -1,8 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { addToast, Button, Card } from '@heroui/react';
+import { addToast, Button } from '@heroui/react';
 import { ChevronLeftIcon, PlusIcon } from 'lucide-react';
-import { NewModuleForm } from '@/app/(dashboard)/modules/components/NewModuleForm/NewModuleForm';
+import { CreateOrUpdateModule } from '@/app/(dashboard)/modules/components/NewModuleForm/CreateOrUpdateModule';
 import { SubmoduleForm } from '@/app/(dashboard)/modules/components/SubModuleForm/SubmoduleForm';
 import TableModules from '@/app/(dashboard)/modules/components/TableModules/TableModules';
 import { Module, Submodule, ViewState } from '@/types/modules';
@@ -10,13 +10,13 @@ import NoModulesContent from '@/app/(dashboard)/modules/components/NoModulesCont
 import { useModuleManager } from '@/app/(dashboard)/modules/hooks/useModuleManager';
 import TableModulesSkeleton from '@/app/(dashboard)/modules/components/TableModulesSkeleton/TableModulesSkeleton';
 
-
 export default function ModulesPage() {
   const [viewState, setViewState] = useState<ViewState>('list');
   const [currentModule, setCurrentModule] = useState<Module | null>(null);
 
   const {
     saveModule,
+    onUpdateModule,
     modules,
     submodules,
     addSubModule,
@@ -27,18 +27,30 @@ export default function ModulesPage() {
 
   const shouldShowNewModuleButton = viewState === 'list' && modules.length > 0;
 
-  const handleSaveModule = async (moduleData: Omit<Module, 'id' | 'createdAt'>) => {
-    const newModule: Module = {
-      ...moduleData,
-    };
-    const moduleSaved: Module | null = await saveModule(newModule);
-    if (moduleSaved) {
-      addToast({
-        title: 'Módulo creado',
-        color: 'success',
-      });
-      setCurrentModule(moduleSaved);
-      setViewState('list');
+  const handleSaveModule = async (moduleData: Module) => {
+    if (moduleData) {
+      const moduleSaved: Module | null = await saveModule(moduleData);
+      if (moduleSaved) {
+        addToast({
+          title: 'Módulo creado',
+          color: 'success',
+        });
+        setCurrentModule(moduleSaved);
+        setViewState('list');
+      }
+    }
+  };
+
+  const handleUpdateModule = async (moduleData: Module) => {
+    if (moduleData?.id) {
+      const moduleUpdated = await onUpdateModule({ moduleId: moduleData.id, newDataModule: moduleData });
+      if (moduleUpdated) {
+        addToast({
+          title: 'Módulo actualizado',
+          color: 'success',
+        });
+        setViewState('list');
+      }
     }
   };
 
@@ -67,6 +79,11 @@ export default function ModulesPage() {
   const openSubmoduleView = (module: Module) => {
     setCurrentModule(module);
     setViewState('add-submodule');
+  };
+
+  const onEditModule = (module: Module) => {
+    setCurrentModule(module);
+    setViewState('new-module');
   };
 
   return (
@@ -107,6 +124,7 @@ export default function ModulesPage() {
           {modules.length > 0 ? (
             <TableModules
               openSubmoduleView={openSubmoduleView}
+              onEditModule={onEditModule}
               onDeleteModule={onDeleteModule}
               modules={modules}
               submodules={submodules}
@@ -119,10 +137,14 @@ export default function ModulesPage() {
       )}
 
       {viewState === 'new-module' && (
-        <Card className="p-6 shadow-md">
-          <h2 className="text-xl font-semibold mb-6 text-center">Crear nuevo módulo</h2>
-          <NewModuleForm onSaveModule={handleSaveModule} />
-        </Card>
+        <div>
+          <CreateOrUpdateModule
+            onUpdateModule={handleUpdateModule}
+            onSaveModule={handleSaveModule}
+            isModeUpdate
+            module={currentModule}
+          />
+        </div>
       )}
 
       {viewState === 'add-submodule' && currentModule && (

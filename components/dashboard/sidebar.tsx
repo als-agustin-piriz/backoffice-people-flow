@@ -33,7 +33,7 @@ export function Sidebar() {
   return (
     <div className={cn(
       'flex flex-col h-screen border-r ' +
-      'border-border bg-gradient-to-b from-indigo-100 via-purple-100 to-pink-100  00 ' +
+      'border-border bg-gradient-to-b from-indigo-100 via-purple-100 to-pink-100' +
       'transition-all duration-300 dark:from-purple-800 dark:via-blue-900  dark:to-black ',
       expanded ? 'w-48' : 'w-20',
     )}>
