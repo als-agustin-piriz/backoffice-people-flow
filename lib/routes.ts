@@ -12,16 +12,18 @@ const API_BASE = process.env.NEXTAPI_URL;
 export const apiRoutes = {
   login: `${API_BASE}/backofficeUsers/login`,
   modules: {
-    createModule: `${API_BASE}/modules/createModule`,
-    deleteModule: `${API_BASE}/modules/deleteModule`,
-    getModules: `${API_BASE}/modules/getModules`,
-    createSubModule: `${API_BASE}/modules/createSubModule`,
+    createModule: `${API_BASE}/modules/create/module`,
+    deleteModule: `${API_BASE}/modules/delete/module`,
+    updateModule: `${API_BASE}/modules/update/module`,
+    getModules: `${API_BASE}/modules/get/modules`,
+    createSubModule: `${API_BASE}/modules/create/submodule`,
   },
 };
 
 export const bffRoutes = {
   createModuleURL: 'api/backend/module',
   deleteModuleURL: `api/backend/module`,
+  updateModuleURL: `api/backend/module`,
   getModulesURL: 'api/backend/module',
   createSubModuleURL: 'api/backend/submodule',
 };

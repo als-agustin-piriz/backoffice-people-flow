@@ -1,16 +1,17 @@
 export type Module = {
-  id?: number;
+  id?: string;
   name: string;
   description?: string;
   created?: string;
   basePrice: number;
-  items?: Submodule[]
+  items?: Submodule[];
+  isActive: boolean;
 };
 
 export type Submodule = {
-  id?: number;
+  id?: string;
   name: string;
-  moduleId?: number;
+  moduleId?: string;
 };
 
 export type ModuleDTO = {

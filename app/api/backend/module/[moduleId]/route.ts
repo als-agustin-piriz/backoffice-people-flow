@@ -25,3 +25,28 @@ export const DELETE = async (
     return NextResponse.json({ error: 'Failed to delete' }, { status: 500 });
   }
 };
+
+export const PUT = async (
+  _req: NextResponse,
+  { params }: { params: { moduleId: string } },
+) => {
+  const { moduleId } = params;
+  const body = await _req.json();
+
+  if (!moduleId) {
+    return NextResponse.json({ error: 'Missing moduleId' }, { status: 400 });
+  }
+
+  try {
+    const backendUpdateURL = `${apiRoutes.modules.updateModule}/${moduleId}`;
+    const data = await fetchApiWithAuth(backendUpdateURL, {
+      method: 'PUT',
+      body,
+    });
+
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error('Error deleting module', error);
+    return NextResponse.json({ error: 'Failed to delete' }, { status: 500 });
+  }
+};

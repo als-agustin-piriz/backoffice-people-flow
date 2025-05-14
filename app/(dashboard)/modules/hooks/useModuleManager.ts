@@ -5,6 +5,7 @@ import { createModule } from '@/services/modules/createModule';
 import { fetchModules } from '@/services/modules/fetchModules';
 import { createSubModule } from '@/services/modules/createSubModule';
 import { deleteModule } from '@/services/modules/deleteModule';
+import { updateModule } from '@/services/modules/updateModule';
 
 
 export const useModuleManager = () => {
@@ -30,6 +31,38 @@ export const useModuleManager = () => {
       return null;
     }
   };
+
+  const onUpdateModule = async (
+    {
+      moduleId,
+      newDataModule,
+    }: {
+      moduleId: string;
+      newDataModule: Module;
+    }) => {
+    try {
+      const updated: Module = await updateModule({ moduleId, newDataModule });
+      if (updated) {
+        setModules((prev) =>
+          prev.map((m) => (m.id === updated.id ? updated : m)),
+        );
+        addToast({
+          title: 'Módulo actualizado',
+          color: 'success',
+        });
+        return updated;
+      }
+      return false;
+    } catch (err) {
+      console.error('Error updating module:', err);
+      addToast({
+        title: 'Error al actualizar módulo',
+        color: 'danger',
+      });
+      return false;
+    }
+  };
+
 
   const onDeleteModule = async (moduleData: Module) => {
     try {
@@ -100,6 +133,7 @@ export const useModuleManager = () => {
     modules,
     submodules,
     saveModule,
+    onUpdateModule,
     onDeleteModule,
     addSubModule,
     loadingModules: loading,

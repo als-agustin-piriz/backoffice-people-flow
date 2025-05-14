@@ -2,7 +2,7 @@ export function TableHeader() {
   return (
     <thead>
     <tr className="bg-gray-50 border-b">
-      {['Nombre', 'ID', 'Submódulos', 'Precio', 'Fecha de creación', 'Acciones'].map((col) => (
+      {['ID', 'Nombre', 'Submódulos', 'Precio', 'Fecha de creación', 'Estado', 'Acciones'].map((col) => (
         <th
           key={col}
           scope="col"
