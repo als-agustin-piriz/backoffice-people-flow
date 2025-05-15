@@ -39,7 +39,7 @@ export const ModalComponent = (
           <ModalHeader>{title}</ModalHeader>
           <ModalBody>{description}</ModalBody>
           <ModalFooter>
-            <Button variant="light" onPress={onClose}>
+            <Button variant="light" onPress={onClose} isDisabled={isLoading}>
               Cancelar
             </Button>
             {onAction && (

@@ -4,7 +4,7 @@ export type Module = {
   description?: string;
   created?: string;
   basePrice: number;
-  items?: Submodule[];
+  submodules?: Submodule[];
   isActive?: boolean;
 };
 

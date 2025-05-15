@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Module, Submodule } from '@/types/modules';
 import { addToast } from '@heroui/react';
 import { createModule } from '@/services/modules/createModule';
@@ -10,23 +10,19 @@ import { updateModule } from '@/services/modules/updateModule';
 
 export const useModuleManager = () => {
   const [modules, setModules] = useState<Module[]>([]);
-  const [submodules, setSubmodules] = useState<Submodule[]>([]);
-  const [loadingSave, setLoadingSave] = useState(false);
-  const [loadingUpdate, setLoadingUpdate] = useState(false);
-  const [loadingDelete, setLoadingDelete] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [loadingModules, setLoadingModules] = useState(false);
-  const [loadingSubModule, setLoadingSubModule] = useState(false);
 
   const saveModule = async (moduleData: Module) => {
     try {
-      setLoadingSave(true);
+      setLoading(true);
       const data = await createModule(moduleData);
       if (data) {
         setModules((prev) => [...prev, data]);
-        setLoadingSave(false);
+        setLoading(false);
         return data;
       }
-      setLoadingSave(false);
+      setLoading(false);
       return null;
     } catch (err) {
       addToast({
@@ -34,7 +30,7 @@ export const useModuleManager = () => {
         color: 'danger',
       });
       console.log('Error creating module:', err);
-      setLoadingSave(false);
+      setLoading(false);
       return null;
     }
   };
@@ -48,7 +44,7 @@ export const useModuleManager = () => {
       newDataModule: Module;
     }) => {
     try {
-      setLoadingUpdate(true);
+      setLoading(true);
       const updated: Module = await updateModule({ moduleId, newDataModule });
       if (updated) {
         setModules((prev) =>
@@ -58,10 +54,10 @@ export const useModuleManager = () => {
           title: 'Módulo actualizado',
           color: 'success',
         });
-        setLoadingUpdate(false);
+        setLoading(false);
         return updated;
       }
-      setLoadingUpdate(false);
+      setLoading(false);
       return false;
     } catch (err) {
       console.error('Error updating module:', err);
@@ -69,7 +65,7 @@ export const useModuleManager = () => {
         title: 'Error al actualizar módulo',
         color: 'danger',
       });
-      setLoadingUpdate(false);
+      setLoading(false);
       return false;
     }
   };
@@ -77,7 +73,7 @@ export const useModuleManager = () => {
 
   const onDeleteModule = async (moduleData: Module) => {
     try {
-      setLoadingDelete(true);
+      setLoading(true);
       if (moduleData.id) {
         const data = await deleteModule(moduleData.id);
         if (data) {
@@ -88,10 +84,10 @@ export const useModuleManager = () => {
             title: 'Módulo eliminado',
             color: 'success',
           });
-          setLoadingDelete(false);
+          setLoading(false);
           return true;
         }
-        setLoadingDelete(false);
+        setLoading(false);
         return false;
       }
     } catch (err) {
@@ -99,24 +95,35 @@ export const useModuleManager = () => {
         title: 'Error al crear módulo',
         color: 'danger',
       });
-      setLoadingDelete(false);
+      setLoading(false);
       console.log('Error creating module:', err);
       return false;
     }
-    setLoadingDelete(false);
+    setLoading(false);
     return false;
   };
 
   const addSubModule = async (submodule: Submodule) => {
     try {
-      setLoadingSubModule(true);
+      setLoading(true);
       const data: Submodule = await createSubModule(submodule);
+
       if (data) {
-        setSubmodules((prev) => [...prev, data]);
-        setLoadingSubModule(false);
+        setModules((prevModules) => {
+          return prevModules.map((mod) => {
+            if (mod.id === data.moduleId) {
+              const updatedSubmodules = mod.submodules ? [...mod.submodules, data] : [data];
+              return { ...mod, submodules: updatedSubmodules };
+            }
+            return mod;
+          });
+        });
+
+        setLoading(false);
         return data;
       }
-      setLoadingSubModule(false);
+
+      setLoading(false);
       return null;
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Ocurrió un error inesperado';
@@ -124,40 +131,32 @@ export const useModuleManager = () => {
         title: message,
         color: 'danger',
       });
-      console.log('Error creating module:', err);
-      setLoadingSubModule(false);
+      console.log('Error creating submodule:', err);
+      setLoading(false);
       return null;
     }
   };
 
-  useEffect(() => {
-    const onGetModules = async () => {
-      setLoadingModules(true);
-      try {
-        const modules = await fetchModules();
-        if (modules)
-          setModules(modules.items);
-      } catch (error) {
-        console.error('Error fetching modules:', error);
-      }
-      setLoadingModules(false);
-    };
-
-    onGetModules();
-  }, []);
-
+  const onGetModules = async () => {
+    setLoadingModules(true);
+    try {
+      const modules = await fetchModules();
+      if (modules)
+        setModules(modules.items);
+    } catch (error) {
+      console.error('Error fetching modules:', error);
+    }
+    setLoadingModules(false);
+  };
 
   return {
     modules,
-    submodules,
     saveModule,
     onUpdateModule,
     onDeleteModule,
     addSubModule,
     loadingModules,
-    loadingSave,
-    loadingUpdate,
-    loadingDelete,
-    loadingSubModule,
+    loading,
+    onGetModules,
   };
 };

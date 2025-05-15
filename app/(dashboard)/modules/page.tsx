@@ -18,13 +18,11 @@ export default function ModulesPage() {
     saveModule,
     onUpdateModule,
     modules,
-    submodules,
     addSubModule,
     loadingModules,
-    loadingSave,
-    loadingDelete,
-    loadingUpdate,
+    loading,
     onDeleteModule,
+    onGetModules,
   } = useModuleManager();
 
   const shouldShowNewModuleButton = viewState === 'list' && modules.length > 0;
@@ -38,9 +36,9 @@ export default function ModulesPage() {
           title: 'Módulo creado',
           color: 'success',
         });
-        setCurrentModule(moduleSaved);
         setViewState('list');
       }
+      setCurrentModule(null);
     }
   };
 
@@ -54,6 +52,7 @@ export default function ModulesPage() {
         });
         setViewState('list');
       }
+      setCurrentModule(null);
     }
   };
 
@@ -70,6 +69,7 @@ export default function ModulesPage() {
           color: 'success',
         });
       }
+      setCurrentModule(null);
       setViewState('list');
     }
   };
@@ -84,10 +84,19 @@ export default function ModulesPage() {
     setViewState('add-submodule');
   };
 
+  const onBackList = () => {
+    setCurrentModule(null);
+    setViewState('list');
+  };
+
   const onEditModule = (module: Module) => {
     setCurrentModule(module);
     setViewState('edit-module');
   };
+
+  useEffect(() => {
+    onGetModules();
+  }, []);
 
   return (
     <div className="flex flex-col">
@@ -108,7 +117,7 @@ export default function ModulesPage() {
             <Button
               color="default"
               variant="flat"
-              onPress={() => setViewState('list')}
+              onPress={onBackList}
               startContent={<ChevronLeftIcon size={18} />}
             >
               Volver a la lista
@@ -130,8 +139,7 @@ export default function ModulesPage() {
               onEditModule={onEditModule}
               onDeleteModule={onDeleteModule}
               modules={modules}
-              submodules={submodules}
-              loadingDelete={loadingDelete}
+              loadingDelete={loading}
             />
           ) : (
             <NoModulesContent setViewState={setViewState} />
@@ -146,7 +154,7 @@ export default function ModulesPage() {
             onSaveModule={handleSaveModule}
             module={currentModule}
             isModeUpdate={'edit-module' === viewState as string}
-            isLoading={loadingUpdate || loadingSave}
+            isLoading={loading}
           />
         </div>
       )}

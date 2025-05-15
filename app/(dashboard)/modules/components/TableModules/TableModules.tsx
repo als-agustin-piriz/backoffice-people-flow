@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { Module, Submodule } from '@/types/modules';
+import { Module } from '@/types/modules';
 import { useModal } from '@/hooks/useModal';
 import { ModalComponent } from '@/components/ModalComponent/ModalComponent';
 import { TablePagination } from '@/app/(dashboard)/modules/components/TableModules/components/TablePagination';
@@ -13,7 +13,6 @@ type Props = {
   onEditModule: (module: Module) => void;
   onDeleteModule: (module: Module) => Promise<boolean>;
   modules: Module[];
-  submodules: Submodule[];
   itemsPerPage?: number;
   loadingDelete?: boolean
 };
@@ -24,7 +23,6 @@ export default function TableModules(
     onDeleteModule,
     onEditModule,
     modules,
-    submodules,
     itemsPerPage = 5,
     loadingDelete = false,
   }: Props) {
@@ -60,7 +58,7 @@ export default function TableModules(
             <TableRow
               key={module.id}
               module={module}
-              submodules={submodules}
+              submodules={module.submodules || []}
               onDelete={handleDelete}
               onOpenSubmodules={openSubmoduleView}
               onEditModule={onEditModule}
@@ -85,7 +83,13 @@ export default function TableModules(
         onClose={onClose}
         backdrop={backdrop}
         title="Eliminar módulo"
-        description={<p>¿Estás seguro de que querés eliminar el módulo?</p>}
+        description={
+          <div className="flex gap-1 w-full">
+            <p>¿Eliminar</p>
+            <p className="font-bold">{moduleToDelete?.name}</p>
+            <p>?</p>
+          </div>
+        }
         onAction={confirmDelete}
         actionLabel="Confirmar"
         actionColor="danger"

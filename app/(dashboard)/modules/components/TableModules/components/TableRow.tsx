@@ -13,9 +13,8 @@ type Props = {
 };
 
 export function TableRow({ module, submodules, onDelete, onOpenSubmodules, onEditModule }: Props) {
-  const moduleSubmodules = submodules.filter((s) => s.moduleId === module.id);
   const [isActive, setIsActive] = useState(module?.isActive || false);
-  const { onUpdateModule, loadingUpdate } = useModuleManager();
+  const { onUpdateModule, loading } = useModuleManager();
 
   const onChangeStatus = async (status: boolean) => {
     const newModule = {
@@ -65,9 +64,9 @@ export function TableRow({ module, submodules, onDelete, onOpenSubmodules, onEdi
         )}
       </td>
       <td className="px-6 py-4">
-        {moduleSubmodules.length > 0 ? (
+        {submodules.length > 0 ? (
           <div className="flex flex-wrap gap-2">
-            {moduleSubmodules.map((sub) => (
+            {submodules.map((sub) => (
               <Chip key={sub.id} color="warning" variant="flat" size="sm">
                 {sub.name}
               </Chip>
@@ -94,7 +93,7 @@ export function TableRow({ module, submodules, onDelete, onOpenSubmodules, onEdi
           onValueChange={onChangeStatus}
           color="success"
           size="sm"
-          isDisabled={loadingUpdate}
+          isDisabled={loading}
         >
           <p className="text-sm">{isActive ? 'Activo' : 'Inactivo'}</p>
         </Switch>

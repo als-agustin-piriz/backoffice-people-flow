@@ -19,7 +19,6 @@ export const SubmoduleForm = ({ moduleName, onSave, onBack }: {
       const newSubmodule: Submodule = {
         name: submoduleName,
       };
-
       onSave(newSubmodule);
       setSubmoduleName('');
       setSaving(false);
@@ -32,7 +31,7 @@ export const SubmoduleForm = ({ moduleName, onSave, onBack }: {
         <h2 className="text-xl font-semibold mb-2">Agregar submódulo para {moduleName}</h2>
       </div>
 
-      <div className="space-y-4 mb-6">
+      <div className="space-y-4 mb-6 w-1/2">
         <div>
           <label className="block text-sm font-medium mb-1" htmlFor="submoduleName">
             Nombre del submódulo
@@ -48,7 +47,7 @@ export const SubmoduleForm = ({ moduleName, onSave, onBack }: {
         </div>
       </div>
 
-      <div className="flex gap-3 justify-end">
+      <div className="flex gap-3 ">
         <Button
           color="default"
           variant="flat"
