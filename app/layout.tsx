@@ -17,10 +17,10 @@ export const metadata: Metadata = {
 
 export default async function RootLayout(
   {
-                                           children,
-                                         }: {
-  children: React.ReactNode;
-}) {
+    children,
+  }: {
+    children: React.ReactNode;
+  }) {
   const session: Session | null = await getServerSession(authOptions);
 
   return (
@@ -28,9 +28,9 @@ export default async function RootLayout(
     <body className={inter.className}>
     <ClientSessionProvider session={session}>
       <ProviderHeroUi>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        {children}
-      </ThemeProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
+        </ThemeProvider>
       </ProviderHeroUi>
     </ClientSessionProvider>
     </body>

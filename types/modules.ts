@@ -23,4 +23,4 @@ export type ModuleDTO = {
   hasNextPage: boolean
 };
 
-export type ViewState = 'list' | 'new-module' | 'add-submodule' | 'loading';
+export type ViewState = 'list' | 'new-module' | 'add-submodule' | 'edit-module' | 'loading';

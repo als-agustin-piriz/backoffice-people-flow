@@ -15,7 +15,7 @@ type Props = {
 export function TableRow({ module, submodules, onDelete, onOpenSubmodules, onEditModule }: Props) {
   const moduleSubmodules = submodules.filter((s) => s.moduleId === module.id);
   const [isActive, setIsActive] = useState(module?.isActive || false);
-  const { onUpdateModule } = useModuleManager();
+  const { onUpdateModule, loadingUpdate } = useModuleManager();
 
   const onChangeStatus = async (status: boolean) => {
     const newModule = {
@@ -94,6 +94,7 @@ export function TableRow({ module, submodules, onDelete, onOpenSubmodules, onEdi
           onValueChange={onChangeStatus}
           color="success"
           size="sm"
+          isDisabled={loadingUpdate}
         >
           <p className="text-sm">{isActive ? 'Activo' : 'Inactivo'}</p>
         </Switch>

@@ -10,6 +10,7 @@ interface NewModuleFormProps {
   onSaveModule: (module: Module) => void;
   onUpdateModule: (module: Module) => void;
   isModeUpdate?: boolean;
+  isLoading?: boolean;
   module?: Module | null;
 }
 
@@ -19,6 +20,7 @@ export const CreateOrUpdateModule: React.FC<NewModuleFormProps> = (
     onUpdateModule,
     isModeUpdate = false,
     module = null,
+    isLoading = false,
   }) => {
   const [title, setTitle] = React.useState<string>(module?.name || '');
   const [description, setDescription] = React.useState<string>(module?.description || '');
@@ -112,6 +114,7 @@ export const CreateOrUpdateModule: React.FC<NewModuleFormProps> = (
               <Button
                 onPress={onFetchModule}
                 color="success"
+                isLoading={isLoading}
                 className="text-white px-6 py-2 shadow-md hover:shadow-lg transition-all duration-200 font-medium flex items-center gap-2"
               >
                 {isModeUpdate ? 'Actualizar módulo' : 'Guardar módulo'}

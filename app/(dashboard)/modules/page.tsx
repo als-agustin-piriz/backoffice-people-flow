@@ -21,11 +21,14 @@ export default function ModulesPage() {
     submodules,
     addSubModule,
     loadingModules,
-    onDeleteModule,
+    loadingSave,
     loadingDelete,
+    loadingUpdate,
+    onDeleteModule,
   } = useModuleManager();
 
   const shouldShowNewModuleButton = viewState === 'list' && modules.length > 0;
+  const modeCreateOrUpdate = viewState === 'new-module' || viewState === 'edit-module';
 
   const handleSaveModule = async (moduleData: Module) => {
     if (moduleData) {
@@ -83,7 +86,7 @@ export default function ModulesPage() {
 
   const onEditModule = (module: Module) => {
     setCurrentModule(module);
-    setViewState('new-module');
+    setViewState('edit-module');
   };
 
   return (
@@ -101,7 +104,7 @@ export default function ModulesPage() {
               Nuevo módulo
             </Button>
           )}
-          {viewState === 'new-module' && (
+          {modeCreateOrUpdate && (
             <Button
               color="default"
               variant="flat"
@@ -136,13 +139,14 @@ export default function ModulesPage() {
         </>
       )}
 
-      {viewState === 'new-module' && (
+      {modeCreateOrUpdate && (
         <div>
           <CreateOrUpdateModule
             onUpdateModule={handleUpdateModule}
             onSaveModule={handleSaveModule}
-            isModeUpdate
             module={currentModule}
+            isModeUpdate={'edit-module' === viewState as string}
+            isLoading={loadingUpdate || loadingSave}
           />
         </div>
       )}
