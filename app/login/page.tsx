@@ -20,14 +20,14 @@ export default function LoginPage() {
         redirect: false,
       });
       if (res?.ok) {
-        router.push('/');
+        router.push('/modules');
       } else
         addToast({
           title: 'Credenciales inválidas',
           color: 'danger',
         });
     }
-  }
+  };
 
   return (
     <div

@@ -22,6 +22,7 @@ export default function ModulesPage() {
     loadingModules,
     loading,
     onDeleteModule,
+    onDeleteSubmodule,
     onGetModules,
   } = useModuleManager();
 
@@ -138,6 +139,8 @@ export default function ModulesPage() {
               openSubmoduleView={openSubmoduleView}
               onEditModule={onEditModule}
               onDeleteModule={onDeleteModule}
+              onDeleteSubmodule={onDeleteSubmodule}
+              isLoadingDeleteSubmodule={loading}
               modules={modules}
               loadingDelete={loading}
             />

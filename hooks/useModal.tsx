@@ -12,7 +12,7 @@ export function useModal() {
 
   return {
     isOpen,
-    onOpen: openWithBackdrop,
+    onOpenModal: openWithBackdrop,
     onClose,
     backdrop,
     setBackdrop,

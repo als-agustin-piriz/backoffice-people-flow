@@ -1,19 +1,38 @@
-import { addToast, Button, Chip, Switch } from '@heroui/react';
-import { CopyIcon, PlusCircleIcon } from 'lucide-react';
 import { Module, Submodule } from '@/types/modules';
 import { useState } from 'react';
 import { useModuleManager } from '@/app/(dashboard)/modules/hooks/useModuleManager';
+import { ModuleIdCell } from './TableRow/components/ModuleIdCell';
+import { ModuleInfoCell } from './TableRow/components/ModuleInfoCell';
+import { PriceCell } from './TableRow/components/PriceCell';
+import { CreatedDateCell } from './TableRow/components/CreatedDateCell';
+import { StatusCell } from './TableRow/components/StatusCell';
+import { SubmodulesCell } from './TableRow/components/SubmodulesCell';
+import { SubmoduleList } from './TableRow/components/SubmoduleList';
+import { ActionsCell } from './TableRow/components/ActionsCell';
 
 type Props = {
   module: Module;
   submodules: Submodule[];
   onDelete: (m: Module) => void;
+  onDeleteSubmodule: (submodule: Submodule) => Promise<boolean>;
+  isLoadingDeleteSubmodule?: boolean;
   onOpenSubmodules: (m: Module) => void;
   onEditModule: (m: Module) => void;
 };
 
-export function TableRow({ module, submodules, onDelete, onOpenSubmodules, onEditModule }: Props) {
+
+export function TableRow(
+  {
+    module,
+    submodules,
+    onDelete,
+    onDeleteSubmodule,
+    onOpenSubmodules,
+    onEditModule,
+    isLoadingDeleteSubmodule = false,
+  }: Props) {
   const [isActive, setIsActive] = useState(module?.isActive || false);
+  const [showSubmodules, setShowSubmodules] = useState(false);
   const { onUpdateModule, loading } = useModuleManager();
 
   const onChangeStatus = async (status: boolean) => {
@@ -23,112 +42,47 @@ export function TableRow({ module, submodules, onDelete, onOpenSubmodules, onEdi
     };
 
     if (module?.id) {
-      const moduleUpdated: Module | false = await onUpdateModule({ moduleId: module.id, newDataModule: newModule });
+      const moduleUpdated: Module | false = await onUpdateModule({
+        moduleId: module.id,
+        newDataModule: newModule,
+      });
       if (moduleUpdated) {
         setIsActive(moduleUpdated.isActive ?? false);
       }
     }
   };
 
-  const handleCopyId = async () => {
-    try {
-      if (module?.id) {
-        await navigator.clipboard.writeText(module.id);
-        addToast({
-          title: 'Copiado al portapapeles',
-          color: 'success',
-        });
-      }
-    } catch (err) {
-      console.error('Error al copiar el ID:', err);
-    }
+  const toggleSubmodules = () => {
+    setShowSubmodules(!showSubmodules);
   };
 
-
   return (
-    <tr className="hover:bg-gray-50 border-b">
-      <td className="px-6 py-4 whitespace-nowrap">
-        <button
-          type="button"
-          onClick={handleCopyId}
-          className="flex items-center gap-1 text-sm bg-gray-100 px-2 py-1 rounded hover:bg-gray-200 transition"
-        >
-          <span className="font-mono">{module?.id && module.id.slice(0, 4)}...</span>
-          <CopyIcon size={14} />
-        </button>
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap">
-        <div className="font-medium text-sm">{module.name}</div>
-        {module.description && (
-          <div className="text-sm text-gray-500">{module.description}</div>
-        )}
-      </td>
-      <td className="px-6 py-4">
-        {submodules.length > 0 ? (
-          <div className="flex flex-wrap gap-2">
-            {submodules.map((sub) => (
-              <Chip key={sub.id} color="warning" variant="flat" size="sm">
-                {sub.name}
-              </Chip>
-            ))}
-          </div>
-        ) : (
-          <span className="text-gray-400 text-sm">Sin submódulos</span>
-        )}
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap">
-        <code className="px-2 py-1 rounded text-sm">${module.basePrice}</code>
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap text-sm">
-        {module.created &&
-          new Date(module.created).toLocaleDateString('es-ES', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-          })}
-      </td>
-      <td>
-        <Switch
-          isSelected={isActive}
-          onValueChange={onChangeStatus}
-          color="success"
-          size="sm"
-          isDisabled={loading}
-        >
-          <p className="text-sm">{isActive ? 'Activo' : 'Inactivo'}</p>
-        </Switch>
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap">
-        <div className="flex items-center gap-3">
-          <Button
-            size="sm"
-            color="primary"
-            variant="flat"
-            onPress={() => onOpenSubmodules(module)}
-            startContent={<PlusCircleIcon size={14} />}
-          >
-            Agregar submódulo
-          </Button>
-          <Button
-            size="sm"
-            color="primary"
-            variant="flat"
-            onPress={() => onEditModule(module)}
-            startContent={<PlusCircleIcon size={14} />}
-          >
-            Editar módulo
-          </Button>
-          <Button
-            size="sm"
-            color="danger"
-            variant="flat"
-            onPress={() => onDelete(module)}
-            startContent={<PlusCircleIcon size={14} />}
-          >
-            Eliminar módulo
-          </Button>
-        </div>
-      </td>
-    </tr>
+    <>
+      <tr className="hover:bg-gray-50 border-b">
+        <ModuleIdCell moduleId={module?.id || ''} />
+        <ModuleInfoCell name={module.name} description={module?.description || ''} />
+        <PriceCell price={module.basePrice} />
+        <CreatedDateCell created={module?.created || ''} />
+        <StatusCell isActive={isActive} onChangeStatus={onChangeStatus} loading={loading} />
+        <ActionsCell
+          module={module}
+          onEditModule={onEditModule}
+          onDelete={onDelete}
+          onOpenSubmodules={onOpenSubmodules}
+        />
+        <SubmodulesCell
+          submodules={submodules}
+          showSubmodules={showSubmodules}
+          toggleSubmodules={toggleSubmodules}
+        />
+      </tr>
+      {showSubmodules && submodules.length > 0 && (
+        <SubmoduleList
+          submodules={submodules}
+          onDeleteSubmodule={onDeleteSubmodule}
+          isLoadingDeleteSubmodule={isLoadingDeleteSubmodule}
+        />
+      )}
+    </>
   );
 }

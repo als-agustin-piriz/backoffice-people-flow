@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { Module } from '@/types/modules';
+import { Module, Submodule } from '@/types/modules';
 import { useModal } from '@/hooks/useModal';
 import { ModalComponent } from '@/components/ModalComponent/ModalComponent';
 import { TablePagination } from '@/app/(dashboard)/modules/components/TableModules/components/TablePagination';
@@ -12,6 +12,8 @@ type Props = {
   openSubmoduleView: (module: Module) => void;
   onEditModule: (module: Module) => void;
   onDeleteModule: (module: Module) => Promise<boolean>;
+  isLoadingDeleteSubmodule?: boolean;
+  onDeleteSubmodule: (submodule: Submodule) => Promise<boolean>;
   modules: Module[];
   itemsPerPage?: number;
   loadingDelete?: boolean
@@ -21,6 +23,8 @@ export default function TableModules(
   {
     openSubmoduleView,
     onDeleteModule,
+    onDeleteSubmodule,
+    isLoadingDeleteSubmodule = false,
     onEditModule,
     modules,
     itemsPerPage = 5,
@@ -28,7 +32,7 @@ export default function TableModules(
   }: Props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [moduleToDelete, setModuleToDelete] = useState<Module | null>(null);
-  const { isOpen, onOpen, onClose, backdrop } = useModal();
+  const { isOpen, onOpenModal, onClose, backdrop } = useModal();
 
   const totalPages = Math.ceil(modules.length / itemsPerPage);
   const currentModules = useMemo(() => {
@@ -38,8 +42,9 @@ export default function TableModules(
 
   const handleDelete = (module: Module) => {
     setModuleToDelete(module);
-    onOpen();
+    onOpenModal();
   };
+
 
   const confirmDelete = async () => {
     if (moduleToDelete) {
@@ -47,6 +52,8 @@ export default function TableModules(
       if (wasDeleted) onClose();
     }
   };
+
+
 
   return (
     <div className="bg-white rounded-lg shadow-sm flex flex-col h-full min-h-[500px] w-full justify-between">
@@ -60,6 +67,8 @@ export default function TableModules(
               module={module}
               submodules={module.submodules || []}
               onDelete={handleDelete}
+              onDeleteSubmodule={onDeleteSubmodule}
+              isLoadingDeleteSubmodule={isLoadingDeleteSubmodule}
               onOpenSubmodules={openSubmoduleView}
               onEditModule={onEditModule}
             />

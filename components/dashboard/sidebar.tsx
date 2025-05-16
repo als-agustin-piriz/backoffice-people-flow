@@ -18,8 +18,8 @@ interface SidebarItem {
 }
 
 const sidebarItems: SidebarItem[] = [
-  { id: 1, title: 'Compañias', href: '/companies', icon: <Home size={20} /> },
-  { id: 2, title: 'Módulos', href: '/modules', icon: <BarChart2 size={20} /> },
+  { id: 1, title: 'Módulos', href: '/modules', icon: <BarChart2 size={20} /> },
+  { id: 2, title: 'Compañias', href: '/companies', icon: <Home size={20} /> },
   { id: 3, title: 'Usuarios', href: '/users', icon: <Users size={20} /> },
   { id: 4, title: 'Configuraciones', href: '/configurations', icon: <Users size={20} /> },
 ];

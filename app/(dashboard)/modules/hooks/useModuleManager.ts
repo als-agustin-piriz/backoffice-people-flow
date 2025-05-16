@@ -6,6 +6,7 @@ import { fetchModules } from '@/services/modules/fetchModules';
 import { createSubModule } from '@/services/modules/createSubModule';
 import { deleteModule } from '@/services/modules/deleteModule';
 import { updateModule } from '@/services/modules/updateModule';
+import { deleteSubModule } from '@/services/modules/deleteSubModule';
 
 
 export const useModuleManager = () => {
@@ -103,6 +104,42 @@ export const useModuleManager = () => {
     return false;
   };
 
+  const onDeleteSubmodule = async (submoduleData: Submodule) => {
+    try {
+      setLoading(true);
+      if (submoduleData.id) {
+        const data = await deleteSubModule(submoduleData.id);
+        if (data) {
+          setModules((prevModules) => {
+            return prevModules.map((mod) => {
+              if (mod.id === submoduleData.moduleId) {
+                return {
+                  ...mod,
+                  submodules: mod.submodules?.filter((sm) => sm.id !== submoduleData.id) || [],
+                };
+              }
+              return mod;
+            });
+          });
+          setLoading(false);
+          return data;
+        }
+        setLoading(false);
+        return false;
+      }
+    } catch (err) {
+      addToast({
+        title: 'Error al crear módulo',
+        color: 'danger',
+      });
+      setLoading(false);
+      console.log('Error creating module:', err);
+      return false;
+    }
+    setLoading(false);
+    return false;
+  };
+
   const addSubModule = async (submodule: Submodule) => {
     try {
       setLoading(true);
@@ -154,6 +191,7 @@ export const useModuleManager = () => {
     saveModule,
     onUpdateModule,
     onDeleteModule,
+    onDeleteSubmodule,
     addSubModule,
     loadingModules,
     loading,

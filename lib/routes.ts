@@ -14,6 +14,7 @@ export const apiRoutes = {
   modules: {
     createModule: `${API_BASE}/modules/create/module`,
     deleteModule: `${API_BASE}/modules/delete/module`,
+    deleteSubmodule: `${API_BASE}/modules/delete/submodule`,
     updateModule: `${API_BASE}/modules/update/module`,
     getModules: `${API_BASE}/modules/get/modules`,
     createSubModule: `${API_BASE}/modules/create/submodule`,
