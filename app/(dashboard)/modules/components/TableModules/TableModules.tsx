@@ -27,7 +27,7 @@ export default function TableModules(
     isLoadingDeleteSubmodule = false,
     onEditModule,
     modules,
-    itemsPerPage = 5,
+    itemsPerPage = 7,
     loadingDelete = false,
   }: Props) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -53,10 +53,8 @@ export default function TableModules(
     }
   };
 
-
-
   return (
-    <div className="bg-white rounded-lg shadow-sm flex flex-col h-full min-h-[500px] w-full justify-between">
+    <div className="bg-white rounded-lg shadow-sm flex flex-col h-[650px] min-h-[650px] w-full justify-between">
       <div className="overflow-x-auto">
         <table className="w-full">
           <TableHeader />
