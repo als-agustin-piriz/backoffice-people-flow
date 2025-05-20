@@ -19,6 +19,10 @@ export const apiRoutes = {
     getModules: `${API_BASE}/modules/get/modules`,
     createSubModule: `${API_BASE}/modules/create/submodule`,
   },
+  companies: {
+    getCompanies: `${API_BASE}/companies/get/companies`,
+    createCompany: `${API_BASE}/companies/create/company`,
+  },
 };
 
 export const bffRoutes = {

@@ -1,7 +1,7 @@
 import { CopyIcon } from 'lucide-react';
 import { addToast } from '@heroui/react';
 
-export const ModuleIdCell = ({ moduleId }: { moduleId: string }) => {
+export const IdCell = ({ moduleId, as = 'td' }: { moduleId: string; as?: 'td' | 'div' }) => {
   const handleCopyId = async () => {
     try {
       await navigator.clipboard.writeText(moduleId);
@@ -14,8 +14,10 @@ export const ModuleIdCell = ({ moduleId }: { moduleId: string }) => {
     }
   };
 
+  const Component = as;
+
   return (
-    <td className="px-6 py-4 whitespace-nowrap">
+    <Component className="py-4 whitespace-nowrap">
       <button
         type="button"
         onClick={handleCopyId}
@@ -24,6 +26,6 @@ export const ModuleIdCell = ({ moduleId }: { moduleId: string }) => {
         <span className="font-mono">{moduleId.slice(0, 4)}...</span>
         <CopyIcon size={14} />
       </button>
-    </td>
+    </Component>
   );
 };

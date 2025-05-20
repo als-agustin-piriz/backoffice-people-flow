@@ -7,7 +7,7 @@ import { SubmoduleForm } from '@/app/(dashboard)/modules/components/SubModuleFor
 import TableModules from '@/app/(dashboard)/modules/components/TableModules/TableModules';
 import { Module, Submodule, ViewState } from '@/types/modules';
 import NoModulesContent from '@/app/(dashboard)/modules/components/NoModulesContent/NoModulesContent';
-import { useModuleManager } from '@/app/(dashboard)/modules/hooks/useModuleManager';
+import { useModuleManager } from '@/app/hooks/useModuleManager';
 import TableModulesSkeleton from '@/app/(dashboard)/modules/components/TableModulesSkeleton/TableModulesSkeleton';
 
 export default function ModulesPage() {

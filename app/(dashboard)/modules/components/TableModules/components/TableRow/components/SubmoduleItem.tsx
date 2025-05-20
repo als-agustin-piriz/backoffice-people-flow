@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { Button } from '@heroui/react';
 import { Archive } from 'lucide-react';
 import {
-  ModuleIdCell
-} from '@/app/(dashboard)/modules/components/TableModules/components/TableRow/components/ModuleIdCell';
+  IdCell
+} from '@/app/(dashboard)/modules/components/TableModules/components/TableRow/components/IdCell';
 
 interface SubmoduleItemProps {
   submodule: Submodule;
@@ -35,7 +35,7 @@ export const SubmoduleItem = (
       text-sm py-1 px-2 rounded hover:bg-gray-100
       cursor-pointer md:w-3/4 w-full p-4"
     >
-      <ModuleIdCell moduleId={submodule.id || ''}/>
+      <IdCell as="div" moduleId={submodule.id || ''}/>
       {submodule.name}
       <div>
         {deleteSubModuleQuestion && (

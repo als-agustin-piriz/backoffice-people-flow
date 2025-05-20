@@ -1,7 +1,7 @@
 import { Module, Submodule } from '@/types/modules';
 import { useState } from 'react';
-import { useModuleManager } from '@/app/(dashboard)/modules/hooks/useModuleManager';
-import { ModuleIdCell } from './TableRow/components/ModuleIdCell';
+import { useModuleManager } from '@/app/hooks/useModuleManager';
+import { IdCell } from './TableRow/components/IdCell';
 import { ModuleInfoCell } from './TableRow/components/ModuleInfoCell';
 import { PriceCell } from './TableRow/components/PriceCell';
 import { CreatedDateCell } from './TableRow/components/CreatedDateCell';
@@ -59,7 +59,7 @@ export function TableRow(
   return (
     <>
       <tr className="hover:bg-gray-50 border-b">
-        <ModuleIdCell moduleId={module?.id || ''} />
+        <IdCell moduleId={module?.id || ''} />
         <ModuleInfoCell name={module.name} description={module?.description || ''} />
         <PriceCell price={module.basePrice} />
         <CreatedDateCell created={module?.created || ''} />
