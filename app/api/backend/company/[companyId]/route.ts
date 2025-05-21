@@ -28,17 +28,17 @@ export const DELETE = async (
 
 export const PUT = async (
   _req: NextResponse,
-  { params }: { params: { moduleId: string } },
+  { params }: { params: { companyId: string } },
 ) => {
-  const { moduleId } = params;
+  const { companyId } = params;
   const body = await _req.json();
 
-  if (!moduleId) {
-    return NextResponse.json({ error: 'Missing moduleId' }, { status: 400 });
+  if (!companyId) {
+    return NextResponse.json({ error: 'Missing companyId' }, { status: 400 });
   }
 
   try {
-    const backendUpdateURL = `${apiRoutes.modules.updateModule}/${moduleId}`;
+    const backendUpdateURL = `${apiRoutes.companies.updateCompany}/${companyId}`;
     const data = await fetchApiWithAuth(backendUpdateURL, {
       method: 'PUT',
       body,

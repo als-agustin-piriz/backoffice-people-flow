@@ -45,7 +45,6 @@ export default function TableModules(
     onOpenModal();
   };
 
-
   const confirmDelete = async () => {
     if (moduleToDelete) {
       const wasDeleted = await onDeleteModule(moduleToDelete);

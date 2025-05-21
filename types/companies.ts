@@ -19,5 +19,5 @@ export type CompanyDTO = {
   hasNextPage: boolean
 };
 
-export type ViewStateCompany = 'cards' | 'create-update-company' | 'edit-company' | 'loading';
+export type ViewStateCompany = 'cards' | 'create-update-company' | 'edit-company' | 'loading' | 'view-company';
 

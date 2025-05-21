@@ -6,9 +6,18 @@ type CompaniesListProps = {
   companies: Array<Company>;
   itemsPerPage?: number;
   onSelectCompany: (company: Company) => void,
+  onEditCompany: (company: Company) => void,
+  handleDelete: (company: Company) => void,
 }
 
-export const CompaniesList = ({ companies, itemsPerPage = 6, onSelectCompany }: CompaniesListProps) => {
+export const CompaniesList = (
+  {
+    companies,
+    itemsPerPage = 6,
+    onSelectCompany,
+    handleDelete,
+    onEditCompany,
+  }: CompaniesListProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [paginatedCompanies, setPaginatedCompanies] = useState<Company[]>([]);
   const totalPages = Math.ceil(companies.length / itemsPerPage);
@@ -67,15 +76,22 @@ export const CompaniesList = ({ companies, itemsPerPage = 6, onSelectCompany }: 
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[450px]">
         {paginatedCompanies.map((company) => (
-          <CompanyCard key={company.id} company={company} onSelectCompany={onSelectCompany} />
+          <CompanyCard
+            key={company.id}
+            company={company}
+            onSelectCompany={onSelectCompany}
+            onEditCompany={onEditCompany}
+            handleDelete={handleDelete}
+          />
         ))}
       </div>
 
       {companies.length > itemsPerPage && (
         <div className="flex items-center justify-between pt-8">
           <div className="text-center text-sm font-medium text-gray-500">
-            Mostrando <span
-            className="text-indigo-600 font-semibold">{((currentPage - 1) * itemsPerPage) + 1} - {Math.min(currentPage * itemsPerPage, companies.length)}</span> de <span
+            Mostrando
+            <span
+              className="text-indigo-600 font-semibold">{((currentPage - 1) * itemsPerPage) + 1} - {Math.min(currentPage * itemsPerPage, companies.length)}</span> de <span
             className="text-indigo-600 font-semibold">{companies.length}</span> resultados
           </div>
 

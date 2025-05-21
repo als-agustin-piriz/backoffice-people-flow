@@ -17,12 +17,11 @@ module.exports = {
     'plugin:jsx-a11y/recommended',
     'next',
     'next/core-web-vitals',
-    'prettier', // opcional, si usás Prettier
+    'prettier',
   ],
   rules: {
-    // Tus reglas personalizadas acá
     '@typescript-eslint/no-unused-vars': ['warn'],
-    'react/react-in-jsx-scope': 'off', // no necesario con Next.js
+    'react/react-in-jsx-scope': 'off',
   },
   settings: {
     react: {

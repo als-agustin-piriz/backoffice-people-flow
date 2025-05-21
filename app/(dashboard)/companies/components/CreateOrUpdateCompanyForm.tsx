@@ -1,18 +1,26 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Company } from '@/types/companies';
+import { Company, ViewStateCompany } from '@/types/companies';
 import { Input } from '@heroui/input';
+import { Button } from '@heroui/react';
 
 interface CreateOrUpdateCompanyFormProps {
-  handleBack?: () => void;
+  handleBack: () => void;
   initialData?: Company | null;
+  setViewState: (viewState: ViewStateCompany) => void;
+  saveCompany: (companyData: Company) => Promise<void>;
+  updateCompany: (companyData: Company) => Promise<void>;
+  loading: boolean;
 }
 
 const CreateOrUpdateCompanyForm: React.FC<CreateOrUpdateCompanyFormProps> = (
   {
     handleBack,
     initialData,
+    saveCompany,
+    updateCompany,
+    loading,
   }) => {
   const [companyData, setCompanyData] = useState<Company>({
     name: '',
@@ -42,13 +50,12 @@ const CreateOrUpdateCompanyForm: React.FC<CreateOrUpdateCompanyFormProps> = (
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
-      debugger;
       setFile(selectedFile);
       const reader = new FileReader();
       reader.onload = () => {
         setCompanyData({
           ...companyData,
-          logo: reader.result as string, // Base64 for preview (optional)
+          logo: reader.result as string,
         });
       };
       reader.readAsDataURL(selectedFile);
@@ -56,12 +63,12 @@ const CreateOrUpdateCompanyForm: React.FC<CreateOrUpdateCompanyFormProps> = (
   };
 
   const handleSubmit = async () => {
-    if (initialData) console.log('update');
-    else console.log('create');
+    if (initialData) await updateCompany(companyData);
+    else await saveCompany(companyData);
   };
 
   return (
-    <div className="bg-white rounded-lg mx-auto p-6">
+    <div className="bg-white rounded-lg mx-auto">
       <div>
         <div className="grid grid-cols-2 gap-3">
           <div className="mb-4">
@@ -170,20 +177,20 @@ const CreateOrUpdateCompanyForm: React.FC<CreateOrUpdateCompanyFormProps> = (
         </div>
 
         <div className="flex justify-center">
-          <button
-            type="button"
-            onClick={handleBack}
+          <Button
+            onPress={handleBack}
             className="px-4 py-2 mr-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-colors"
           >
             Cancelar
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
-            onClick={handleSubmit}
-            className="px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors"
+            onPress={handleSubmit}
+            isLoading={loading}
+            className="px-4 py-2 bg-gray-700  text-white rounded-lg hover:bg-gray-500  transition-colors"
           >
             {initialData ? 'Actualizar Compañía' : 'Crear Compañía'}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

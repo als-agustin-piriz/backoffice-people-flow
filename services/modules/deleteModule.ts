@@ -1,7 +1,7 @@
 import { bffRoutes } from '@/lib/routes';
 
 export async function deleteModule(moduleId: string): Promise<boolean> {
-  const deleteURL = `${bffRoutes.deleteModuleURL}/${moduleId}`;
+  const deleteURL = `${bffRoutes.moduleURL}/${moduleId}`;
   return fetch(deleteURL, {
     method: 'DELETE',
   }).then(res => {

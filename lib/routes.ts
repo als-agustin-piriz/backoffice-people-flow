@@ -22,13 +22,12 @@ export const apiRoutes = {
   companies: {
     getCompanies: `${API_BASE}/companies/get/companies`,
     createCompany: `${API_BASE}/companies/create/company`,
+    updateCompany: `${API_BASE}/companies/update/company`,
   },
 };
 
 export const bffRoutes = {
-  createModuleURL: 'api/backend/module',
-  deleteModuleURL: `api/backend/module`,
-  updateModuleURL: `api/backend/module`,
-  getModulesURL: 'api/backend/module',
-  createSubModuleURL: 'api/backend/submodule',
+  moduleURL: 'api/backend/module',
+  subModuleURL: 'api/backend/submodule',
+  companiesURL: 'api/backend/company',
 };

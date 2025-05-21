@@ -10,12 +10,7 @@ interface DashboardLayoutProps {
 // @ts-expect-error expected
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const { status } = useSession();
-  // const router = useRouter();
   const userLogged = status === 'authenticated';
-
-  // if (!userLogged) {
-  //   router.push('/login');
-  // }
 
   if (userLogged) {
     return (

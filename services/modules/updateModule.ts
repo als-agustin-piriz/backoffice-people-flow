@@ -5,7 +5,7 @@ export async function updateModule({moduleId, newDataModule}: {
     moduleId: string,
     newDataModule: Module
 }): Promise<Module> {
-    const deleteURL = `${bffRoutes.updateModuleURL}/${moduleId}`;
+    const deleteURL = `${bffRoutes.moduleURL}/${moduleId}`;
     return fetch(deleteURL, {
         method: 'PUT',
         body: JSON.stringify(newDataModule),

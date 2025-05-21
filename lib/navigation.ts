@@ -1,6 +1,6 @@
 export interface SidebarItem {
   label: string;
-  path?: string; // Ahora puede no tener path si es solo un menú contenedor
+  path?: string;
   icon?: React.ReactNode;
   requiredPermissions?: string[];
   children?: SidebarItem[];
@@ -17,37 +17,31 @@ export const navigationItems: SidebarItem[] = [
   {
     label: 'Dashboard',
     path: '/dashboard',
-    // icon: <DashboardIcon / >,
     requiredPermissions: ['dashboard:view'],
   },
   {
     label: 'Compañias',
     path: '/dashboard/companies',
-    // icon: <SettingsIcon / >,
     requiredPermissions: ['companies:view'],
   },
   {
     label: 'Módulos',
     path: '/dashboard/modules',
-    // icon: <SettingsIcon / >,
     requiredPermissions: ['modules:view'],
   },
   {
     label: 'Usuarios',
     path: '/dashboard/users',
-    // icon: <SettingsIcon / >,
     requiredPermissions: ['users:view'],
   },
   {
     label: 'Configuraciones',
     path: '/dashboard/configurations',
-    // icon: <SettingsIcon / >,
     requiredPermissions: ['configurations:view'],
   },
   {
     label: 'Compañias',
-    // icon: <UsersIcon / >,
-    requiredPermissions: ['users:manage', 'reports:view'], // Permiso para ver el menú principal
+    requiredPermissions: ['users:manage', 'reports:view'],
     children: [
       {
         label: 'Alta compañia',
@@ -62,21 +56,3 @@ export const navigationItems: SidebarItem[] = [
     ],
   },
 ];
-
-// export const navigationItems = [
-//   {
-//     title: 'Inicio',
-//     href: '/dashboard',
-//     requiredModules: ['home'],
-//   },
-//   {
-//     title: 'Compañias',
-//     href: '/dashboard/companies',
-//     requiredModules: ['recruitment:companies:write'],
-//   },
-//   {
-//     title: 'Customers',
-//     href: '/dashboard/customers',
-//     requiredModules: ['admin'],
-//   },
-// ];
